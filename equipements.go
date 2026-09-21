@@ -1,8 +1,7 @@
-package main
+package main 
 
 // ============================================================
 // ÉQUIPEMENT
-// Représente un équipement du joueur.
 // ============================================================
 
 type Equipment struct {
@@ -12,9 +11,7 @@ type Equipment struct {
 }
 
 // ============================================================
-// EMPLACEMENTS D'ÉQUIPEMENT
-// Le joueur peut avoir un équipement sur la tête,
-// le torse et les pieds.
+// EMPLACEMENTS
 // ============================================================
 
 type EquipmentSlots struct {
@@ -24,9 +21,7 @@ type EquipmentSlots struct {
 }
 
 // ============================================================
-// ÉQUIPER UN OBJET
-// Place l'équipement dans l'emplacement correspondant.
-// Si un équipement est déjà présent, il est remplacé.
+// ÉQUIPER
 // ============================================================
 
 func Equip(slots *EquipmentSlots, equipment Equipment) {
@@ -43,8 +38,7 @@ func Equip(slots *EquipmentSlots, equipment Equipment) {
 }
 
 // ============================================================
-// DÉSÉQUIPER UN OBJET
-// Retire l'équipement de l'emplacement choisi.
+// DÉSÉQUIPER
 // ============================================================
 
 func Unequip(slots *EquipmentSlots, slot string) {
@@ -61,8 +55,7 @@ func Unequip(slots *EquipmentSlots, slot string) {
 }
 
 // ============================================================
-// CALCUL DU BONUS DE PV
-// Additionne les bonus de PV de tous les équipements portés.
+// BONUS TOTAL DE PV
 // ============================================================
 
 func TotalBonusHP(slots *EquipmentSlots) int {
