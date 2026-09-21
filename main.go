@@ -3,6 +3,7 @@ package main
 import (
 	"aventure/exploration"
 	"aventure/inventaire"
+	"aventure/menuMarchand"
 	"aventure/menu_Principal"
 	"aventure/personnage"
 	"fmt"
@@ -23,13 +24,20 @@ func main() {
 				fmt.Println("créer d'abord un personnage")
 				continue
 			}
-			inventaire.AccessInventory(monPersonnage)
+			inventaire.AccessInventory(&monPersonnage)
 		case 3:
-			fmt.Println("ENTRAINEMENT")
+			if !personnagecree {
+				fmt.Println("créer d'abord un personnage")
+				continue
+			}
+			menuMarchand.MenuMarchand(&monPersonnage)
 		case 4:
+			fmt.Println("ENTRAINEMENT")
+		case 5:
 			fmt.Println("QUITTER")
 			return
-
+		default:
+			fmt.Println("chopix invalide")
 		}
 	}
 }

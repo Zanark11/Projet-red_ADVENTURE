@@ -33,6 +33,7 @@ func DisplayInfo(character Character) {
 	fmt.Println("niveau:", character.niveau)
 	fmt.Println("inventaire:", character.Inventaire)
 	fmt.Println("xp:", character.xp)
+	fmt.Println("Argent", character.Argent)
 }
 func InitCharacter(nom string, choixclasse string) Character {
 	pointDeVieActuel := 100
@@ -52,8 +53,9 @@ func InitCharacter(nom string, choixclasse string) Character {
 		classe:           choixclasse,
 		niveau:           1,
 		pointsDeVieMax:   100,
-		Inventaire:       [6]string{"potion", "potion", "potion", "", "", ""},
+		Inventaire:       [6]string{"potion de vie,", "potion de vie,", "potion de vie,", "", "", ""},
 		xp:               0,
+		Argent:           100,
 	}
 	return character
 }
@@ -66,6 +68,7 @@ type Character struct {
 	pointDeVieActuel int
 	Inventaire       [6]string
 	xp               int
+	Argent           int
 }
 
 func JeterObjet(character *Character) {
