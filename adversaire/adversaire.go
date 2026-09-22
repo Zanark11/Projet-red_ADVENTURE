@@ -9,7 +9,7 @@ type Adversaire struct {
 
 func CreerAdversaire() Adversaire {
 	adversaire := Adversaire{
-		nom:              "Gobelin",
+		nom:              "Grandmage",
 		niveau:           1,
 		pointDeVieActuel: 100,
 		pointDeVieMax:    200,

@@ -7,7 +7,7 @@ import (
 
 func Explorer(perso *personnage.Character) {
 	niveau2 := false
-	niveau3 := false
+
 for{
 var choix int
 
@@ -15,8 +15,7 @@ var choix int
 	fmt.Println()
 	fmt.Println("1.Niveau n°1")
 	fmt.Println("2.Niveau n°2")
-	fmt.Println("3.Niveau n°3")
-	fmt.Println("4.Retour")
+	fmt.Println("3.Retour")
 
 	fmt.Scanln(&choix)
 	switch choix{
@@ -28,11 +27,6 @@ var choix int
 			continue
 		}
 	case 3:
-		if !niveau3 {
-			fmt.Println("jouer le niveau 1 et niveau 2 pour débloquer le niveau 3")
-				continue 
-			}
-	case 4:
           return
 	default:
 		fmt.Println("choix invalide")

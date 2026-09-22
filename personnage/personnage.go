@@ -1,6 +1,8 @@
 package personnage
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func CreationPersonnage() Character {
 
@@ -116,4 +118,8 @@ func JeterObjet(character *Character) {
 	character.Inventaire[index] = ""
 
 	fmt.Println("vous avez jetez:", objet)
+}
+
+func Degats(perso *Character, degats int){
+   perso.pointDeVieActuel -= degats
 }
