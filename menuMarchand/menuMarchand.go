@@ -1,7 +1,7 @@
 package menuMarchand
 
 import (
-	marchand "aventure/Marchand"
+	 "aventure/Marchand"
 	"aventure/personnage"
 	"fmt"
 )
@@ -12,7 +12,8 @@ for{
 
 	fmt.Println("====Marchand====")
 	fmt.Println("1.voir les objets disponibles")
-	fmt.Println("2.Retour")
+	fmt.Println("2.Augmentation de l'inventaire")
+	fmt.Println("3.Retour")
 
 	fmt.Scanln(&choix)
 
@@ -20,6 +21,8 @@ for{
 	case 1:
 		marchand.Afficherobjet(player)
 	case 2:
+	    marchand.AmeliorationInventaire(player) 
+	case 3:
 		return
 	default:
 		fmt.Println("choix invalide")

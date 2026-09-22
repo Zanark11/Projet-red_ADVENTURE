@@ -5,6 +5,8 @@ import (
 	"fmt"
 )
 
+const prixAugmentationInventaire = 80
+
 type Item struct {
 	nom  string
 	prix int
@@ -69,42 +71,81 @@ var maBoutique = Shop{
 		{nom: "potion de vie", prix: 0},
 		{nom: "livre de sort", prix: 50},
 		{nom: "poison", prix: 40},
+		{nom: "potion de mana", prix: 40},
 	},
 }
 
 func Afficherobjet(player *personnage.Character) {
-	for{
-var choix int
-	fmt.Println("====OBJET DISPONIBLE====")
-	for i, item := range maBoutique.Items {
-		fmt.Println(i+1, "-", item.nom, "-", item.prix, "pièce")
-	}
-	fmt.Println()
-	fmt.Println("1.Acheter un objet")
-	fmt.Println("2.Retour")
-	fmt.Scanln(&choix)
+	for {
+		var choix int
+		fmt.Println("====OBJET DISPONIBLE====")
+		for i, item := range maBoutique.Items {
+			fmt.Println(i+1, "-", item.nom, "-", item.prix, "pièce")
+		}
+		fmt.Println()
+		fmt.Println("1.Acheter un objet")
+		fmt.Println("2.Retour")
+		fmt.Scanln(&choix)
 
-	switch choix {
-	case 1 : 
-	   var choixObjet int
-	   fmt.Println("Quel objet veux tu achjeter ?")
-	   fmt.Scanln(&choixObjet)
-	   if choixObjet < 1|| choixObjet > len(maBoutique.Items) {
-        fmt.Println("choix invalide")
-		continue
-	   }
-	   objet := maBoutique.Items[choixObjet-1]
-	   fmt.Println("tu as choisi :", objet.nom)
-	   if Buy(player, objet){
-		fmt.Println("Achat réussi !")
-	   }else{
-		fmt.Println("Achat impossible")
-	   }
-	case 2:
-		return
-	default:
-		fmt.Println("choix invalide")
+		switch choix {
+		case 1:
+			var choixObjet int
+			fmt.Println("Quel objet veux tu acheter ?")
+			fmt.Scanln(&choixObjet)
+			if choixObjet < 1 || choixObjet > len(maBoutique.Items) {
+				fmt.Println("choix invalide")
+				continue
+			}
+			objet := maBoutique.Items[choixObjet-1]
+			fmt.Println("tu as choisi :", objet.nom)
+			if Buy(player, objet) {
+				fmt.Println("Achat réussi !")
+			} else {
+				fmt.Println("Achat impossible")
+			}
+		case 2:
+			return
+		default:
+			fmt.Println("choix invalide")
+		}
 	}
-  }   
 }
-	
+
+func AugmenterInventaire(player *personnage.Character) bool {
+
+	if player.Argent < prixAugmentationInventaire {
+		return false
+	}
+	player.Argent -= prixAugmentationInventaire
+	player.Inventaire = append(player.Inventaire, "", "", "")
+	return true
+}
+
+func AmeliorationInventaire(player *personnage.Character) bool {
+	for {
+		var choix int
+
+		fmt.Println("====AMELIORER SON INVENTAIRE====")
+		fmt.Println()
+		fmt.Println("capacité actuelle:", len(player.Inventaire))
+		fmt.Println("prix:", prixAugmentationInventaire, "pièce pour augmenter votre inventaire")
+		fmt.Println("1.Acheter une augmentation de capacité d'inventaire")
+		fmt.Println("2.Retour")
+
+		fmt.Scanln(&choix)
+		switch choix {
+		case 1:
+			if AugmenterInventaire(player) {
+				fmt.Println("Amélioration achétée !")
+				fmt.Println("Nouvelle capacité:", len(player.Inventaire))
+			} else {
+				fmt.Println("Tu n'as pas assez de pièce d'argent")
+			}
+		case 2:
+			return true
+
+		default:
+			fmt.Println("choix invalide")
+		}
+	}
+}

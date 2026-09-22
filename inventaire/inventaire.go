@@ -26,7 +26,7 @@ func AccessInventory(player *personnage.Character) bool {
 				}
 			}
 			fmt.Println("1.Jeter un objet")
-			fmt.Println("2.Fabriquer un objet")
+			fmt.Println("2.Forgéron")
 			fmt.Println("3.Retour")
 			fmt.Println("Que veux tu faire ?")
 			fmt.Scanln(&choix)

@@ -1,19 +1,18 @@
 package adversaire
 
-
 type Adversaire struct {
-	nom                   string
-	pointDeVieActuel      int
-	niveau                int
-	pointDeVieMax         int
+	nom              string
+	pointDeVieActuel int
+	niveau           int
+	pointDeVieMax    int
 }
 
-func CreerAdversaire() Adversaire{
+func CreerAdversaire() Adversaire {
 	adversaire := Adversaire{
-    nom:"Gobelin",
-	niveau:1,
-	pointDeVieActuel:100,
-	pointDeVieMax : 100,
+		nom:              "Gobelin",
+		niveau:           1,
+		pointDeVieActuel: 100,
+		pointDeVieMax:    200,
 	}
 	return adversaire
 }

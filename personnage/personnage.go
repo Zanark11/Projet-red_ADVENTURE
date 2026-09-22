@@ -6,15 +6,38 @@ func CreationPersonnage() Character {
 
 	var nom string
 	var choixclasse string
+	for {
+		valide := true
+		fmt.Println("======*CREATION DU PERSONNAGE*======")
+		fmt.Println("Donne un nom à ton perso ? ")
+		fmt.Scanln(&nom)
 
-	fmt.Println("======*CREATION DU PERSONNAGE*======")
-	fmt.Println("Donne un nom à ton perso ? ")
-	fmt.Scanln(&nom)
+		if nom == "" {
+			fmt.Println("ne nom ne pas peut pas être vide")
+			continue
+		}
+		premierelettre := nom[0]
 
+		for _, lettre := range nom {
+			if lettre >= '0' && lettre <= '9' {
+				valide = false
+			}
+		}
+		if !valide {
+			fmt.Println("votre ne peut contenir de chiffre")
+			continue
+		}
+		if premierelettre >= 'a' && premierelettre <= 'z' {
+			premierelettre = premierelettre - ('a' - 'A')
+			nom = string(premierelettre) + nom[1:]
+		}
+		break
+	}
 	fmt.Println("choisir ta classe:")
-	fmt.Println("1. Guerrier")
-	fmt.Println("2. Mage")
-	fmt.Println("3. Archer")
+	fmt.Println("1. Avocat")
+	fmt.Println("2. Informaticien")
+
+	fmt.Println("3. Medecin")
 
 	fmt.Scanln(&choixclasse)
 
@@ -33,6 +56,7 @@ func DisplayInfo(character Character) {
 	fmt.Println("niveau:", character.niveau)
 	fmt.Println("inventaire:", character.Inventaire)
 	fmt.Println("xp:", character.xp)
+	fmt.Println("mana:", character.mana)
 	fmt.Println("Argent", character.Argent)
 }
 func InitCharacter(nom string, choixclasse string) Character {
@@ -52,9 +76,10 @@ func InitCharacter(nom string, choixclasse string) Character {
 		pointDeVieActuel: pointDeVieActuel,
 		classe:           choixclasse,
 		niveau:           1,
-		pointsDeVieMax:   100,
-		Inventaire:       [6]string{"potion de vie,", "potion de vie,", "potion de vie,", "", "", ""},
+		pointsDeVieMax:   2000,
+		Inventaire:       []string{"potion de vie,", "potion de vie,", "potion de vie,", "", "", ""},
 		xp:               0,
+		mana:            100,
 		Argent:           100,
 	}
 	return character
@@ -66,8 +91,9 @@ type Character struct {
 	niveau           int
 	pointsDeVieMax   int
 	pointDeVieActuel int
-	Inventaire       [6]string
+	Inventaire       []string
 	xp               int
+	mana             int
 	Argent           int
 }
 
@@ -76,7 +102,7 @@ func JeterObjet(character *Character) {
 
 	fmt.Println("Quel objet aimerais tu jeter ?")
 	fmt.Scanln(&choix)
-	if choix < 1 || choix > 6 {
+	if choix < 1 || choix > len(character.Inventaire) {
 		fmt.Println("choix invalide")
 		return
 	}
