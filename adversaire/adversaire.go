@@ -11,7 +11,7 @@ func CreerAdversaire() Adversaire {
 	adversaire := Adversaire{
 		nom:              "Grandmage",
 		niveau:           1,
-		pointDeVieActuel: 100,
+		pointDeVieActuel: 115,
 		pointDeVieMax:    200,
 	}
 	return adversaire

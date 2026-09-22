@@ -72,6 +72,9 @@ var maBoutique = Shop{
 		{nom: "livre de sort", prix: 50},
 		{nom: "poison", prix: 40},
 		{nom: "potion de mana", prix: 40},
+		{nom: "chapeau d'aventure", prix:80},
+		{nom: "Tunique d'aventure", prix:80},
+		{nom: "Botte de d'aventure", prix:60},
 	},
 }
 

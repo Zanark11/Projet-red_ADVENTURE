@@ -1,6 +1,7 @@
 package personnage
 
 import (
+
 	"fmt"
 )
 
@@ -15,7 +16,7 @@ func CreationPersonnage() Character {
 		fmt.Scanln(&nom)
 
 		if nom == "" {
-			fmt.Println("ne nom ne pas peut pas être vide")
+			fmt.Println("le nom ne peut pas être vide")
 			continue
 		}
 		premierelettre := nom[0]
@@ -60,29 +61,34 @@ func DisplayInfo(character Character) {
 	fmt.Println("xp:", character.xp)
 	fmt.Println("mana:", character.mana)
 	fmt.Println("Argent", character.Argent)
+	fmt.Println("Equipement", character.equipement)
 }
 func InitCharacter(nom string, choixclasse string) Character {
 	pointDeVieActuel := 100
 
 	switch choixclasse {
 	case "1":
-		pointDeVieActuel = 90
+		pointDeVieActuel = 120
 	case "2":
-		pointDeVieActuel = 60
+		pointDeVieActuel = 110
 	case "3":
-		pointDeVieActuel = 70
+		pointDeVieActuel = 100
 	}
 
+
+	equipement := Porterequipement()
 	character := Character{
 		nom:              nom,
 		pointDeVieActuel: pointDeVieActuel,
 		classe:           choixclasse,
 		niveau:           1,
-		pointsDeVieMax:   2000,
+		pointsDeVieMax:   500,
 		Inventaire:       []string{"potion de vie,", "potion de vie,", "potion de vie,", "", "", ""},
 		xp:               0,
 		mana:            100,
 		Argent:           100,
+		equipement:       equipement,
+		
 	}
 	return character
 }
@@ -97,6 +103,8 @@ type Character struct {
 	xp               int
 	mana             int
 	Argent           int
+	equipement       Equipement
+	
 }
 
 func JeterObjet(character *Character) {
@@ -121,5 +129,76 @@ func JeterObjet(character *Character) {
 }
 
 func Degats(perso *Character, degats int){
-   perso.pointDeVieActuel -= degats
+   perso.pointDeVieActuel -= degats 
 }
+
+func Affichevie(perso *Character){
+	fmt.Println("vie",perso.pointDeVieActuel, "/", perso.pointsDeVieMax,)
+}
+
+func Playervivant(perso *Character) bool {
+	return perso.pointDeVieActuel > 0
+}
+
+type Equipement struct{
+	Tête  string
+	Torse  string
+	Pieds  string
+}
+
+func Porterequipement() Equipement{
+	var choix int
+	var equipement Equipement
+
+	fmt.Println("===Equipement pour l'aventure===")
+	fmt.Println()
+	fmt.Println("choisir ton vêtement pour le Torse")
+	fmt.Println("1.Un débardeur")
+	fmt.Println("2.Un tee-shirt")
+	fmt.Println("3.Aucun")
+
+	fmt.Scanln(&choix)
+
+	switch choix {
+	case 1:
+		equipement.Torse="Un débardeur"
+	case 2:
+		equipement.Torse="Un tee-shirt"
+	case 3:
+		equipement.Torse="Aucun"
+	}
+
+
+	fmt.Println("choisir ton vêtement pour la tête")
+	fmt.Println("1.Une casquette")
+	fmt.Println("2.un bornet")
+	fmt.Println("3.Aucun")
+
+	fmt.Scanln(&choix)
+	switch choix{
+	case 1:
+		equipement.Tête="Une casquette"
+	case 2:
+		equipement.Tête="Un bornet"
+	case 3:
+		equipement.Tête="Aucun"
+	}
+
+	fmt.Println("choisir tes chaussures")
+	fmt.Println("1.Des basquette")
+	fmt.Println("2.Des sandale")
+	fmt.Println("3.Aucun")
+
+    fmt.Scanln(&choix)
+
+    switch choix{
+	case 1:
+		equipement.Pieds="Des basquette"
+	case 2:
+		equipement.Pieds="Des sandale"
+	case 3:
+		equipement.Pieds="Aucun"
+	}
+	return equipement
+}
+

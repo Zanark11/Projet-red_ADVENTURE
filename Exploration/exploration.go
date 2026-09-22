@@ -1,13 +1,13 @@
-package exploration
+package Exploration
 
 import (
-	menuexploration "aventure/menuExploration"
+	"aventure/menuexploration"
 	"aventure/personnage"
 	"fmt"
 )
 
-func Exploration(perso *personnage.Character) bool {
-	personnageCree := false
+func Exploration(perso *personnage.Character, personnageCree *bool) {
+
 	for {
 		var choix int
 
@@ -20,18 +20,18 @@ func Exploration(perso *personnage.Character) bool {
 		switch choix {
 		case 1:
 			*perso = personnage.CreationPersonnage()
-			personnageCree = true
+			*personnageCree = true
 		case 2:
-			if !personnageCree {
+			if !*personnageCree {
 				fmt.Println("vous devez créer un personnage d'abord")
 				continue
 			}
 			menuexploration.Explorer(perso)
 		case 3:
-			return personnageCree
+			return
 		default:
 			fmt.Println("choix invalide")
-			return false
+			return
 		}
 	}
 }
