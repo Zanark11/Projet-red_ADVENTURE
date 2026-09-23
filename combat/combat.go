@@ -3,6 +3,7 @@ package combat
 import (
 	"fmt"
 	"math/rand"
+	"time"
 
 	"Projet-red_ADVENTURE/adversaire"
 	"Projet-red_ADVENTURE/personnage"
@@ -31,6 +32,147 @@ func PileOuFace() string {
 func ChoisirReponseGrandSage() int {
 	// On choisit un nombre entre 1 et 3.
 	return rand.Intn(3) + 1
+}
+
+// PossedeObjet vérifie si le joueur possède un objet.
+func PossedeObjet(joueur *personnage.Character, objet string) bool {
+	for i := 0; i < len(joueur.Inventaire); i++ {
+		if joueur.Inventaire[i] == objet {
+			return true
+		}
+	}
+
+	return false
+}
+
+// UtiliserPoison inflige 10 dégâts au Grand Sage
+// pendant 3 secondes.
+func UtiliserPoison(gobelin *adversaire.Adversaire) {
+	for i := 0; i < 3; i++ {
+		adversaire.PerdrePV(gobelin, 10)
+
+		fmt.Println("Poison !")
+		fmt.Println("Le Grand Sage perd 10 PV.")
+		adversaire.AfficherPV(*gobelin)
+
+		// On attend 1 seconde avant le prochain dégât.
+		if i < 2 {
+			time.Sleep(1 * time.Second)
+		}
+	}
+}
+
+// UtiliserChronoboros utilise le sort Chronoboros.
+// Le sort coûte 40 mana et réduit le temps de réponse de 5 secondes.
+func UtiliserChronoboros(joueur *personnage.Character) bool {
+	// On vérifie si le joueur possède assez de mana.
+	if personnage.GetMana(*joueur) < 40 {
+		fmt.Println("Vous n'avez pas assez de mana.")
+		fmt.Println("Il faut 40 mana pour utiliser Chronoboros.")
+		return false
+	}
+
+	// On retire 40 mana au joueur.
+	personnage.DepenserMana(joueur, 40)
+
+	// On réduit le temps de réponse de 5 secondes.
+	joueur.ReductionTemps(5)
+
+	fmt.Println("Chronoboros utilisé !")
+	fmt.Println("40 mana consommés.")
+	fmt.Println("Votre temps de réponse est réduit de 5 secondes.")
+
+	return true
+}
+
+// MenuObjetCombat permet au joueur d'utiliser un objet pendant le combat.
+// La fonction retourne true si l'objet utilisé termine le tour.
+// Elle retourne false si le joueur choisit de revenir au combat.
+func MenuObjetCombat(
+	joueur *personnage.Character,
+	gobelin *adversaire.Adversaire,
+) bool {
+	for {
+		fmt.Println()
+		fmt.Println("========== OBJETS ==========")
+		fmt.Println("1 - Potion de vie")
+		fmt.Println("2 - Potion de poison")
+		fmt.Println("3 - Potion de mana")
+		fmt.Println("4 - Chronoboros")
+		fmt.Println("5 - Retour")
+		fmt.Print("Votre choix : ")
+
+		var choix int
+		fmt.Scanln(&choix)
+
+		switch choix {
+		case 1:
+			// On vérifie si le joueur possède une potion de vie.
+			if !PossedeObjet(joueur, "potion de vie") {
+				fmt.Println("Vous n'avez pas de potion de vie.")
+				continue
+			}
+
+			// La potion de vie rend 50 PV.
+			personnage.TakePot(joueur)
+
+			// La potion de vie utilise le tour du joueur.
+			return true
+
+		case 2:
+			// On vérifie si le joueur possède une potion de poison.
+			if !PossedeObjet(joueur, "potion de poison") {
+				fmt.Println("Vous n'avez pas de potion de poison.")
+				continue
+			}
+
+			// On retire la potion de l'inventaire.
+			personnage.TakePoisonPot(joueur)
+
+			// Le poison attaque uniquement le Grand Sage.
+			UtiliserPoison(gobelin)
+
+			// La potion de poison utilise le tour.
+			return true
+
+		case 3:
+			// On vérifie si le joueur possède une potion de mana.
+			if !PossedeObjet(joueur, "potion de mana") {
+				fmt.Println("Vous n'avez pas de potion de mana.")
+				continue
+			}
+
+			// On utilise la potion de mana.
+			personnage.TakeManaPot(joueur)
+
+			// La potion de mana ne termine pas le tour.
+			// Le joueur revient donc au menu des objets.
+			continue
+
+		case 4:
+			// On vérifie si le joueur possède le livre de sort.
+			if !PossedeObjet(joueur, "livre de sort : chronoboros") {
+				fmt.Println("Vous ne possédez pas le sort Chronoboros.")
+				continue
+			}
+
+			// On utilise Chronoboros.
+			utilise := UtiliserChronoboros(joueur)
+
+			// Si Chronoboros est utilisé, le tour est terminé.
+			if utilise {
+				return true
+			}
+
+			// Si le joueur n'a pas assez de mana,
+			// il reste dans le menu.
+			continue
+
+		case 5:
+			// Le joueur revient au menu du combat.
+			return false
+		}
+	}
 }
 
 // Serie1 contient les 3 questions du premier combat.
@@ -154,6 +296,40 @@ func JouerSerie1(joueur *personnage.Character) {
 			fmt.Println("Choisissez une question :")
 			fmt.Println()
 
+			// Le joueur peut choisir d'utiliser un objet
+			// avant de répondre à une question.
+			fmt.Println()
+			fmt.Println("========== ACTION ==========")
+			fmt.Println("1 - Continuer le combat")
+			fmt.Println("2 - Utiliser un objet")
+			fmt.Print("Votre choix : ")
+
+			var action int
+			fmt.Scanln(&action)
+
+			if action == 2 {
+				// On ouvre le menu des objets.
+				utilise := MenuObjetCombat(joueur, &gobelin)
+
+				// Si un objet a été utilisé et qu'il termine le tour,
+				// on passe directement au tour du Grand Sage.
+				if utilise {
+					personnage.AfficherPV(*joueur)
+					adversaire.AfficherPV(gobelin)
+
+					tourJoueur = false
+					continue
+				}
+
+				// Si le joueur choisit "Retour",
+				// on revient au choix de l'action.
+				continue
+			}
+
+			if action != 1 {
+				fmt.Println("Choix invalide.")
+				continue
+			}
 			// On affiche seulement les 3 questions du lot actuel.
 			for j := 0; j < 3; j++ {
 				fmt.Println(j+1, "-", Serie1[debut+j].Texte)
@@ -164,7 +340,7 @@ func JouerSerie1(joueur *personnage.Character) {
 			fmt.Println()
 
 			// Le joueur a un temps limité pour choisir une question.
-			choix, aRepondu := AttendreEntree(joueur.niveau)
+			choix, aRepondu := AttendreEntree(personnage.TempsReponse(*joueur))
 
 			// Si le joueur n'a pas répondu à temps.
 			if !aRepondu {
@@ -182,13 +358,13 @@ func JouerSerie1(joueur *personnage.Character) {
 				tourJoueur = false
 
 				continue
-		}
+			}
 
-		// On vérifie que le choix est entre 1 et 3.
-		if choix < 1 || choix > 3 {
-			fmt.Println("Choix invalide.")
-			continue
-		}
+			// On vérifie que le choix est entre 1 et 3.
+			if choix < 1 || choix > 3 {
+				fmt.Println("Choix invalide.")
+				continue
+			}
 			// On récupère la question choisie.
 			question := Serie1[debut+choix-1]
 
@@ -305,6 +481,7 @@ func JouerSerie1(joueur *personnage.Character) {
 		fmt.Println("================================")
 		fmt.Println("VICTOIRE !")
 		fmt.Println("Vous avez vaincu le Grand Sage !")
+		personnage.GagnerCombat(joueur)
 		fmt.Println("================================")
 	}
 }

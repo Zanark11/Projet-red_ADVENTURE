@@ -29,27 +29,50 @@ func TakePot(character *Character) {
 	fmt.Println("Vous n'avez pas de potion de vie.")
 }
 
-// TakePoisonPot cherche et consomme une potion de poison.
-//
-// La fonction ne retire PAS de PV au joueur.
-// Les dégâts seront appliqués au Grand Sage par le système de combat.
+// TakePoisonPot utilise une potion de poison dans l'inventaire.
+// La fonction retourne true si la potion a bien été utilisée.
 func TakePoisonPot(character *Character) bool {
-	// On cherche une potion de poison dans l'inventaire.
 	for i := 0; i < len(character.Inventaire); i++ {
 		if character.Inventaire[i] == "potion de poison" {
-
-			// La potion est consommée.
+			// On retire la potion de l'inventaire.
 			character.Inventaire[i] = ""
 
-			fmt.Println("Potion de poison utilisée sur le Grand Sage !")
+			// Les dégâts seront appliqués au Grand Sage
+			// par le système de combat.
+			fmt.Println("Potion de poison utilisée !")
 
-			// true signifie que la potion a bien été utilisée.
 			return true
 		}
 	}
 
 	fmt.Println("Vous n'avez pas de potion de poison.")
+	return false
+}
 
-	// false signifie qu'aucune potion n'a été trouvée.
+// TakeManaPot utilise une potion de mana.
+// La potion rend 40 mana sans dépasser 100.
+// La fonction retourne true si la potion a été utilisée.
+func TakeManaPot(character *Character) bool {
+	for i := 0; i < len(character.Inventaire); i++ {
+		if character.Inventaire[i] == "potion de mana" {
+			// On retire la potion de l'inventaire.
+			character.Inventaire[i] = ""
+
+			// On ajoute 40 mana.
+			character.mana += 40
+
+			// Le mana maximum est de 100.
+			if character.mana > 100 {
+				character.mana = 100
+			}
+
+			fmt.Println("Potion de mana utilisée !")
+			fmt.Println("Mana :", character.mana, "/ 100")
+
+			return true
+		}
+	}
+
+	fmt.Println("Vous n'avez pas de potion de mana.")
 	return false
 }

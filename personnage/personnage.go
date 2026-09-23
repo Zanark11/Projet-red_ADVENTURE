@@ -80,6 +80,7 @@ func InitCharacter(nom string, choixclasse string) Character {
 		Inventaire:       []string{"potion de vie", "potion de vie", "potion de vie", "", "", ""},
 		xp:               0,
 		mana:             100,
+		reductionTemps:   0,
 		Argent:           100,
 	}
 	return character
@@ -95,6 +96,7 @@ type Character struct {
 	xp               int
 	mana             int
 	Argent           int
+	reductionTemps   int
 }
 
 func JeterObjet(character *Character) {
@@ -141,3 +143,64 @@ func EstVaincu(character Character) bool {
 	return character.pointDeVieActuel <= 0
 }
 
+// GagnerCombat donne les récompenses après avoir gagné un combat.
+func GagnerCombat(character *Character) {
+	// Le joueur gagne 30 pièces.
+	character.Argent += 30
+
+	// Le joueur gagne 1 XP et monte d'un niveau,
+	// sauf s'il est déjà au niveau maximum.
+	if character.niveau < 10 {
+		character.xp++
+		character.niveau++
+
+		fmt.Println("+1 XP !")
+		fmt.Println("Nouveau niveau :", character.niveau)
+	} else {
+		fmt.Println("Niveau maximum atteint !")
+	}
+
+	fmt.Println("+30 pièces !")
+	fmt.Println("XP :", character.xp)
+	fmt.Println("Argent :", character.Argent, "pièces")
+}
+
+// TempsReponse calcule le temps disponible pour répondre
+// en fonction du niveau du joueur.
+func TempsReponse(character Character) int {
+	// Niveau 1 = 20 secondes.
+	// Chaque niveau ajoute 5 secondes.
+	temps := 20 + (character.niveau-1)*5
+
+	// Chronoboros peut réduire le temps de réponse.
+	temps -= character.reductionTemps
+
+	// Le niveau maximum est 10,
+	// donc le temps maximum est 65 secondes.
+	if character.niveau > 10 {
+		temps = 65
+	}
+
+	return temps
+}
+
+// GetMana retourne la quantité de mana actuelle du personnage.
+func GetMana(character Character) int {
+	return character.mana
+}
+
+// DepenserMana retire une quantité de mana au personnage.
+// La fonction retourne true si le joueur avait assez de mana.
+func DepenserMana(character *Character, cout int) bool {
+	if character.mana < cout {
+		return false
+	}
+
+	character.mana -= cout
+	return true
+}
+
+// ReductionTemps réduit le temps de réponse du personnage.
+func (character *Character) ReductionTemps(reduction int) {
+	character.reductionTemps += reduction
+}

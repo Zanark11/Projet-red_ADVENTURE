@@ -40,10 +40,7 @@ func Chronometre(niveau int) {
 
 // AttendreEntree permet de récupérer une réponse du joueur
 // tout en affichant le temps restant sur une seule ligne.
-func AttendreEntree(niveau int) (int, bool) {
-	// On récupère le temps disponible.
-	temps := TempsDeReponse(niveau)
-
+func AttendreEntree(temps int) (int, bool) {
 	// On crée un channel pour recevoir la réponse.
 	reponse := make(chan int, 1)
 
