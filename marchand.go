@@ -3,6 +3,14 @@ package main
 type Shop struct {
 	Items []Item
 }
+var shop = Shop{
+	Items: []Item{
+		{Name: "Potion de vie", Price: 20},
+		{Name: "Livre de sort", Price: 50},
+		{Name: "Poison", Price: 30},
+		{Name: "Potion de mana", Price: 30},
+	},
+}
 
 // Vérifie si le joueur a assez d'argent
 func HasEnoughMoney(player *Player, item Item) bool {
