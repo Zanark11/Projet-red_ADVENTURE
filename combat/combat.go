@@ -8,290 +8,279 @@ import (
 	"Projet-red_ADVENTURE/personnage"
 )
 
-// Question représente une question du combat.
 type Question struct {
 	Texte        string
 	Reponses     [3]string
 	BonneReponse int
 }
 
-// PileOuFace choisit au hasard qui commence le combat.
 func PileOuFace() string {
-	// rand.Intn(2) donne soit 0, soit 1.
-	resultat := rand.Intn(2)
-
-	if resultat == 0 {
+	if rand.Intn(2) == 0 {
 		return "pile"
 	}
-
 	return "face"
 }
 
-// ChoisirReponseGrandSage choisit une réponse au hasard.
 func ChoisirReponseGrandSage() int {
-	// On choisit un nombre entre 1 et 3.
 	return rand.Intn(3) + 1
 }
 
-// Serie1 contient les 3 questions du premier combat.
+// =====================
+// QUESTIONS COMBAT 1
+// =====================
+
 var Serie1 = [9]Question{
-	{
-		Texte: "Quelle est la planète la plus proche du Soleil ?",
-		Reponses: [3]string{
-			"Mars",
-			"Mercure",
-			"Venus",
-		},
-		BonneReponse: 2,
-	},
-	{
-		Texte: "Combien y a-t-il de continents sur Terre ?",
-		Reponses: [3]string{
-			"5",
-			"6",
-			"7",
-		},
-		BonneReponse: 3,
-	},
-	{
-		Texte: "Quel animal est souvent appelé le roi de la jungle ?",
-		Reponses: [3]string{
-			"Le lion",
-			"Le tigre",
-			"Le gorille",
-		},
-		BonneReponse: 1,
-	},
-	{
-		Texte: "Quelle est la capitale de la France ?",
-		Reponses: [3]string{
-			"Lyon",
-			"Paris",
-			"Marseille",
-		},
-		BonneReponse: 2,
-	},
-	{
-		Texte: "Combien font 5 x 5 ?",
-		Reponses: [3]string{
-			"10",
-			"20",
-			"25",
-		},
-		BonneReponse: 3,
-	},
-	{
-		Texte: "Quelle couleur obtient-on en mélangeant du bleu et du jaune ?",
-		Reponses: [3]string{
-			"Vert",
-			"Orange",
-			"Violet",
-		},
-		BonneReponse: 1,
-	},
-	{
-		Texte: "Quel est le plus grand océan du monde ?",
-		Reponses: [3]string{
-			"Océan Atlantique",
-			"Océan Pacifique",
-			"Océan Indien",
-		},
-		BonneReponse: 2,
-	},
-	{
-		Texte: "Combien de jours compte une semaine ?",
-		Reponses: [3]string{
-			"5",
-			"7",
-			"10",
-		},
-		BonneReponse: 2,
-	},
-	{
-		Texte: "Quel langage utilisons-nous pour développer Red Adventure ?",
-		Reponses: [3]string{
-			"Python",
-			"Java",
-			"Go",
-		},
-		BonneReponse: 3,
-	},
+	{"Quelle est la planète la plus proche du Soleil ?", [3]string{"Mars", "Mercure", "Venus"}, 2},
+	{"Combien y a-t-il de continents sur Terre ?", [3]string{"5", "6", "7"}, 3},
+	{"Quel animal est souvent appelé le roi de la jungle ?", [3]string{"Le lion", "Le tigre", "Le gorille"}, 1},
+	{"Quelle est la capitale de la France ?", [3]string{"Lyon", "Paris", "Marseille"}, 2},
+	{"Combien font 5 x 5 ?", [3]string{"10", "20", "25"}, 3},
+	{"Quelle couleur obtient-on en mélangeant du bleu et du jaune ?", [3]string{"Vert", "Orange", "Violet"}, 1},
+	{"Quel est le plus grand océan du monde ?", [3]string{"Océan Atlantique", "Océan Pacifique", "Océan Indien"}, 2},
+	{"Combien de jours compte une semaine ?", [3]string{"5", "7", "10"}, 2},
+	{"Quel langage utilisons-nous pour développer Red Adventure ?", [3]string{"Python", "Java", "Go"}, 3},
 }
 
-// JouerSerie1 lance le combat de la série 1.
+// =====================
+// COMBAT 1
+// =====================
+
 func JouerSerie1(joueur *personnage.Character) {
-	// On crée le Grand Sage.
+
 	gobelin := adversaire.CreerAdversaire()
-
-	// On lance le pile ou face pour savoir qui commence.
-	resultat := PileOuFace()
-
 	debut := 0
+	tourJoueur := PileOuFace() == "pile"
 
-	// true = le joueur commence.
-	// false = le Grand Sage commence.
-	tourJoueur := resultat == "pile"
+	fmt.Println("========== COMBAT 1 ==========")
 
-	fmt.Println("Pile ou face...")
-
-	if resultat == "pile" {
-		fmt.Println("Résultat : PILE")
-		fmt.Println("Le joueur commence !")
-	} else {
-		fmt.Println("Résultat : FACE")
-		fmt.Println("Le Grand Sage commence !")
-	}
-
-	fmt.Println()
-
-	fmt.Println("========== COMBAT - SÉRIE 1 ==========")
-	fmt.Println()
-
-	// On fait les 3 questions de la série.
 	for !personnage.EstVaincu(*joueur) && !adversaire.EstVaincu(gobelin) {
-		// Tour du joueur.
-		if tourJoueur {
-			fmt.Println("Choisissez une question :")
-			fmt.Println()
 
-			// On affiche seulement les 3 questions du lot actuel.
+		if tourJoueur {
+
+			fmt.Println()
+			fmt.Println("Choisissez une question :")
+
 			for j := 0; j < 3; j++ {
 				fmt.Println(j+1, "-", Serie1[debut+j].Texte)
 			}
 
-			fmt.Print("\nVotre choix : ")
+			fmt.Print("Votre choix : ")
 
-			// On récupère directement le choix du joueur.
 			var choix int
 			fmt.Scanln(&choix)
 
-			// On vérifie que le choix est entre 1 et 3.
 			if choix < 1 || choix > 3 {
 				fmt.Println("Choix invalide.")
 				continue
 			}
 
-			// On récupère la question choisie.
 			question := Serie1[debut+choix-1]
 
-			fmt.Println()
 			fmt.Println("Question :", question.Texte)
-			fmt.Println()
 
-			// On affiche les 3 réponses.
-			for j := 0; j < len(question.Reponses); j++ {
+			for j := 0; j < 3; j++ {
 				fmt.Println(j+1, "-", question.Reponses[j])
 			}
 
-			// Le Grand Sage choisit automatiquement une réponse.
 			reponse := ChoisirReponseGrandSage()
 
-			fmt.Println("Le Grand Sage choisit la réponse :", reponse)
-
-			fmt.Println()
-
-			// On vérifie la réponse.
 			if reponse == question.BonneReponse {
 				fmt.Println("Bonne réponse !")
-				fmt.Println("Le joueur perd 40 PV.")
-
 				personnage.PerdrePV(joueur, 40)
 			} else {
 				fmt.Println("Mauvaise réponse !")
-				fmt.Println("Le Grand Sage perd 40 PV.")
-
 				adversaire.PerdrePV(&gobelin, 40)
 			}
 
-			// On affiche les PV du Gobelin.
 			personnage.AfficherPV(*joueur)
 			adversaire.AfficherPV(gobelin)
 
-			fmt.Println()
-
-			// On passe au lot de 3 questions suivant.
 			debut += 3
-
-			// Si on arrive après la dernière question,
-			// on recommence avec le premier lot.
 			if debut >= len(Serie1) {
 				debut = 0
 			}
 
-			// Le tour du joueur est terminé.
 			tourJoueur = false
 
 		} else {
-			// Tour du Grand Sage.
+
+			fmt.Println()
 			fmt.Println("========== TOUR DU GRAND SAGE ==========")
-			fmt.Println()
 
-			// Le Grand Sage choisit au hasard une des 3 questions du lot.
-			indiceQuestion := rand.Intn(3)
-			question := Serie1[debut+indiceQuestion]
+			question := Serie1[debut+rand.Intn(3)]
 
-			fmt.Println("Le Grand Sage choisit une question :")
-			fmt.Println()
 			fmt.Println("Question :", question.Texte)
-			fmt.Println()
 
-			// Le joueur doit choisir une réponse parmi les 3.
-			for j := 0; j < len(question.Reponses); j++ {
+			for j := 0; j < 3; j++ {
 				fmt.Println(j+1, "-", question.Reponses[j])
 			}
 
-			fmt.Println()
 			fmt.Print("Votre réponse : ")
 
-			var reponseJoueur int
-			fmt.Scanln(&reponseJoueur)
+			var reponse int
+			fmt.Scanln(&reponse)
 
-			// On vérifie si la réponse du joueur est correcte.
-			if reponseJoueur == question.BonneReponse {
+			if reponse == question.BonneReponse {
 				fmt.Println("Bonne réponse !")
-				fmt.Println("Le Grand Sage perd 40 PV.")
-
 				adversaire.PerdrePV(&gobelin, 40)
 			} else {
 				fmt.Println("Mauvaise réponse !")
-				fmt.Println("Le joueur perd 40 PV.")
-
 				personnage.PerdrePV(joueur, 40)
 			}
 
-			fmt.Println()
 			personnage.AfficherPV(*joueur)
 			adversaire.AfficherPV(gobelin)
-			fmt.Println()
 
-			// On passe au lot de 3 questions suivant.
 			debut += 3
-
-			// Si on arrive après la dernière question,
-			// on recommence avec le premier lot.
 			if debut >= len(Serie1) {
 				debut = 0
 			}
 
-			// Le tour du Grand Sage est terminé.
 			tourJoueur = true
 		}
 	}
+
 	if personnage.EstVaincu(*joueur) {
+		fmt.Println()
+		fmt.Println("========== DÉFAITE ==========")
+	} else {
+		fmt.Println()
+		fmt.Println("========== VICTOIRE ==========")
+		fmt.Println("Vous avez vaincu le Grand Sage !")
 
-	fmt.Println("================================")
-	fmt.Println("DÉFAITE !")
-	fmt.Println("Le Grand Sage a gagné le combat.")
-	fmt.Println("================================")
+		// Récompenses
+		personnage.GagnerCombat(joueur)
 
-} else if adversaire.EstVaincu(gobelin) {
+		// Passage au combat 2
+		fmt.Println()
+		fmt.Println("========== COMBAT 2 ==========")
 
-	fmt.Println("================================")
-	fmt.Println("VICTOIRE !")
-	fmt.Println("Vous avez vaincu le Grand Sage !")
-	fmt.Println("================================")
-
-	// Le joueur reçoit ses récompenses.
-	personnage.GagnerCombat(joueur)
+		JouerSerie2(joueur)
+	}
 }
+
+// =====================
+// QUESTIONS COMBAT 2
+// =====================
+
+var Serie2 = [9]Question{
+	{"Quelle est la plus grande planète du système solaire ?", [3]string{"Mars", "Jupiter", "Venus"}, 2},
+	{"Combien font 10 + 5 ?", [3]string{"15", "20", "25"}, 1},
+	{"Quel langage est utilisé dans Red Adventure ?", [3]string{"Go", "Java", "Python"}, 1},
+	{"Combien y a-t-il de côtés sur un triangle ?", [3]string{"3", "4", "5"}, 1},
+	{"Quelle est la capitale de l'Italie ?", [3]string{"Madrid", "Rome", "Berlin"}, 2},
+	{"Combien font 6 x 6 ?", [3]string{"30", "36", "42"}, 2},
+	{"Quel est le symbole chimique de l'eau ?", [3]string{"CO2", "H2O", "O2"}, 2},
+	{"Combien y a-t-il d'heures dans une journée ?", [3]string{"12", "24", "48"}, 2},
+	{"Quel système d'exploitation est développé par Microsoft ?", [3]string{"Windows", "Linux", "Android"}, 1},
+}
+
+// =====================
+// COMBAT 2
+// =====================
+
+func JouerSerie2(joueur *personnage.Character) {
+
+	gobelin := adversaire.CreerAdversaire()
+	debut := 0
+	tourJoueur := PileOuFace() == "pile"
+
+	fmt.Println()
+	fmt.Println("Le combat 2 commence !")
+
+	for !personnage.EstVaincu(*joueur) && !adversaire.EstVaincu(gobelin) {
+
+		if tourJoueur {
+
+			fmt.Println()
+			fmt.Println("Choisissez une question :")
+
+			for j := 0; j < 3; j++ {
+				fmt.Println(j+1, "-", Serie2[debut+j].Texte)
+			}
+
+			fmt.Print("Votre choix : ")
+
+			var choix int
+			fmt.Scanln(&choix)
+
+			if choix < 1 || choix > 3 {
+				fmt.Println("Choix invalide.")
+				continue
+			}
+
+			question := Serie2[debut+choix-1]
+
+			fmt.Println("Question :", question.Texte)
+
+			for j := 0; j < 3; j++ {
+				fmt.Println(j+1, "-", question.Reponses[j])
+			}
+
+			reponse := ChoisirReponseGrandSage()
+
+			if reponse == question.BonneReponse {
+				personnage.PerdrePV(joueur, 40)
+			} else {
+				adversaire.PerdrePV(&gobelin, 40)
+			}
+
+			personnage.AfficherPV(*joueur)
+			adversaire.AfficherPV(gobelin)
+
+			debut += 3
+			if debut >= len(Serie2) {
+				debut = 0
+			}
+
+			tourJoueur = false
+
+		} else {
+
+			fmt.Println()
+			fmt.Println("========== TOUR DU GRAND SAGE ==========")
+
+			question := Serie2[debut+rand.Intn(3)]
+
+			fmt.Println("Question :", question.Texte)
+
+			for j := 0; j < 3; j++ {
+				fmt.Println(j+1, "-", question.Reponses[j])
+			}
+
+			fmt.Print("Votre réponse : ")
+
+			var reponse int
+			fmt.Scanln(&reponse)
+
+			if reponse == question.BonneReponse {
+				adversaire.PerdrePV(&gobelin, 40)
+			} else {
+				personnage.PerdrePV(joueur, 40)
+			}
+
+			personnage.AfficherPV(*joueur)
+			adversaire.AfficherPV(gobelin)
+
+			debut += 3
+			if debut >= len(Serie2) {
+				debut = 0
+			}
+
+			tourJoueur = true
+		}
+	}
+
+	if personnage.EstVaincu(*joueur) {
+		fmt.Println()
+		fmt.Println("========== DÉFAITE ==========")
+	} else {
+		fmt.Println()
+		fmt.Println("========== VICTOIRE ==========")
+		fmt.Println("Vous avez gagné le combat 1 !")
+        fmt.Println("Vous avez vaincu le Grand Sage !")
+		fmt.Println("vous passez au combat 2 !")
+		// Récompenses du combat 2
+		personnage.GagnerCombat(joueur)
+	}
 }
