@@ -26,22 +26,32 @@ func AccessInventory(player *personnage.Character) bool {
 				}
 			}
 			fmt.Println("1.Jeter un objet")
-			fmt.Println("2.Forgéron")
-			fmt.Println("3.Retour")
+			fmt.Println("2.Utiliser un objet")
+			fmt.Println("3.Forgéron")
+			fmt.Println("4.Retour")
 			fmt.Println("Que veux tu faire ?")
 			fmt.Scanln(&choix)
 
 			switch choix {
 			case 1:
 				personnage.JeterObjet(player)
+			case 3:
+				personnage.FabriqueObjet(player)
 			case 2:
-				/*mettre le code pour fabriquer un objet */
+                personnage.UtiliserObjet(player)
+		    case 4:
+			    return false
+		    default:
+			    fmt.Println("choix invalide")
 			}
 		case 2:
 			return false
 		default:
 			fmt.Println("choix invalide")
 		}
-
 	}
 }
+
+
+
+	

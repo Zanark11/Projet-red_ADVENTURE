@@ -1,7 +1,7 @@
 package Exploration
 
 import (
-	"aventure/menuexploration"
+	 "aventure/menuExploration"
 	"aventure/personnage"
 	"fmt"
 )
@@ -19,6 +19,10 @@ func Exploration(perso *personnage.Character, personnageCree *bool) {
 		fmt.Scanln(&choix)
 		switch choix {
 		case 1:
+			if *personnageCree{
+				fmt.Println("Tu as déja créé ton personnage.")
+				continue
+			}
 			*perso = personnage.CreationPersonnage()
 			*personnageCree = true
 		case 2:

@@ -68,13 +68,14 @@ func Buy(player *personnage.Character, item Item) bool {
 
 var maBoutique = Shop{
 	Items: []Item{
-		{nom: "potion de vie", prix: 0},
-		{nom: "livre de sort", prix: 50},
-		{nom: "poison", prix: 40},
+		{nom: "potion de vie", prix: 0,},
+		{nom: "livre de connaissance", prix: 50},
+		{nom: "poison ", prix: 40},
 		{nom: "potion de mana", prix: 40},
-		{nom: "chapeau d'aventure", prix:80},
-		{nom: "Tunique d'aventure", prix:80},
-		{nom: "Botte de d'aventure", prix:60},
+		{nom: "cuir du sanglier", prix: 80},
+		{nom: "fourrure de loup", prix: 70},
+		{nom: "plume de corbeau", prix: 60},
+		{nom: "peau de troll", prix: 70},
 	},
 }
 

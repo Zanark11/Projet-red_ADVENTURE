@@ -1,4 +1,4 @@
-package ramassserunobjet
+package ramasserunobjet
 
 import (
 	marchand "aventure/Marchand"
@@ -29,10 +29,10 @@ func RamasserUnobjet(player *personnage.Character, objet string) {
 			for i, objetInventaire := range player.Inventaire {
 				if objetInventaire == "" {
 					player.Inventaire[i] = objet
-					break
-				}
-			}
-
+					fmt.Println(objet,"à été ajouter dans votre inventaire")
+					return
+				    }
+			    }
 		} else {
 			fmt.Println("vous n'avez pas assez d'argent")
 		}

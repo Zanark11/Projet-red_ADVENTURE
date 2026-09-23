@@ -3,10 +3,10 @@ package main
 import (
 	"aventure/entrainement"
 	"aventure/Exploration"
-	"aventure/inventaire"
 	"aventure/menuMarchand"
 	"aventure/menu_Principal"
 	"aventure/personnage"
+	"aventure/inventaire"
 	"fmt"
 )
 
