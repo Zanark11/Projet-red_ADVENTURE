@@ -9,11 +9,10 @@ Pandant ce périple vous devrez vous organisez dans votre "Inventaire" , à fair
 # Installation du jeu
 
 Il s'agit d'un jeu qui se déroule dans le terminal. Pour jouer au jeu:
--Décompresser le dossier
--Créer un dossier pour mettre tous les fichies après décompression
+-Créer un dossier pour mettre le dossier src
 -Installer le langage Go sur l'ordinateur
 -Installer un éditeur de code (VS STUDIO)
--Ouvrer le dossier dans vs studio 
+-Ouvrer le dossier créer dans vs studio 
 -Dans le terminal du dossier (ctrl + j) taper la commande go run . pour lancer le programme
 
 
