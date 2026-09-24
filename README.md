@@ -2,9 +2,9 @@
 
 # présentation du jeu
 
-Aimez vous l'aventure et la culture générale ? Si oui , vous êtes au bon endroit. Nous vous présentons le jeu du nom de "Aventure BRHI" 
-Dans ce jeu vous vous retrouverez à rechercher des habittants d'un village qui ont disparu.
-Pandant ce périple vous serez emmener à vous organisez dans votre "Inventaire" , à faire de bon choix et aussi à reflechir car il vous arrivera de tomber soit sur des bandits intélèctuels , trouver des objets qui peut-être vous servirons ou pas . Je n'en dirai pas plus!
+Aimez vous l'aventure et la résolution d'énigmes ? Si oui , vous êtes au bon endroit! Nous vous présentons le jeu du nom de "Aventure BRHI" 
+Dans ce jeu vous serez amené à rechercher des habittants d'un village qui ont mytstérieusement disparu.
+Pandant ce périple vous devrez vous organisez dans votre "Inventaire" , à faire les bons choix et surtout  reflechir, car il vous arrivera de tomber  sur des bandits intélèctuels , trouver des objets qui peut-être vous servirons ou pas . Je n'en dirai pas plus!
 
 # Installation du jeu
 

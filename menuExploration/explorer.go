@@ -107,7 +107,7 @@ func Explorer(perso *personnage.Character) {
 						fmt.Println("choix invalide")
 					   }
 					if porteOuverte {
-						fmt.Println("porte ouverte vous sortez de la maison.")
+						fmt.Println(" vous sortez de la maison.")
 					} else {
 						fmt.Println("la porte reste fermée.")
 					}
@@ -139,7 +139,7 @@ func Explorer(perso *personnage.Character) {
 				combat.JouerSerie1(perso)
 				fmt.Println()
 				fmt.Println("vous avez battu le Grandmage .")
-				fmt.Println(" vous constatez une clé à coté du Grandmage. vous prenez la clé.")
+				fmt.Println("vous constatez une clé à coté du Grandmage. vous prenez la clé.")
 				fmt.Println("vous continuez et sur votre chemin vous croisez une personne qui vous dit:")
 				fmt.Println("<<N'oublie pas la route est longue, aventurier...")
 				fmt.Println("mais souviens-toi: qui va doucement va sûrement. surtout ne te précipite pas. Observe,")
@@ -154,6 +154,7 @@ func Explorer(perso *personnage.Character) {
 	    case 2:
 	        if !niveau2{
 				fmt.Println("le niveau 2 sortira le 30/09/2026")
+				fmt.Println("Avec plus de fonctionnalité")
 				continue
 			}
 		case 3:

@@ -1,7 +1,6 @@
 package personnage
 
 import (
-
 	"fmt"
 )
 
@@ -75,7 +74,6 @@ func InitCharacter(nom string, choixclasse string) Character {
 		pointDeVieActuel = 100
 	}
 
-
 	equipement := Porterequipement()
 	character := Character{
 		nom:              nom,
@@ -85,10 +83,9 @@ func InitCharacter(nom string, choixclasse string) Character {
 		pointsDeVieMax:   500,
 		Inventaire:       []string{"potion de vie", "potion de vie", "potion de vie", "", "", ""},
 		xp:               0,
-		mana:            100,
+		mana:             100,
 		Argent:           100,
 		equipement:       equipement,
-		
 	}
 	return character
 }
@@ -104,7 +101,6 @@ type Character struct {
 	mana             int
 	Argent           int
 	equipement       Equipement
-	
 }
 
 func JeterObjet(character *Character) {
@@ -128,27 +124,25 @@ func JeterObjet(character *Character) {
 	fmt.Println("vous avez jetez:", objet)
 }
 
-
-
-func Affichevie(perso *Character){
-	fmt.Println("vie",perso.pointDeVieActuel, "/", perso.pointsDeVieMax,)
+func Affichevie(perso *Character) {
+	fmt.Println("vie", perso.pointDeVieActuel, "/", perso.pointsDeVieMax)
 }
 
 func Playervivant(perso *Character) bool {
 	return perso.pointDeVieActuel > 0
 }
 
-func Degats(perso *Character, degats int){
-   perso.pointDeVieActuel -= degats 
+func Degats(perso *Character, degats int) {
+	perso.pointDeVieActuel -= degats
 }
 
-type Equipement struct{
+type Equipement struct {
 	Tête  string
-	Torse  string
-	Pieds  string
+	Torse string
+	Pieds string
 }
 
-func Porterequipement() Equipement{
+func Porterequipement() Equipement {
 	var choix int
 	var equipement Equipement
 
@@ -163,13 +157,12 @@ func Porterequipement() Equipement{
 
 	switch choix {
 	case 1:
-		equipement.Torse="Un débardeur"
+		equipement.Torse = "Un débardeur"
 	case 2:
-		equipement.Torse="Un tee-shirt"
+		equipement.Torse = "Un tee-shirt"
 	case 3:
-		equipement.Torse="Aucun"
+		equipement.Torse = "Aucun"
 	}
-
 
 	fmt.Println("choisir ton vêtement pour la tête")
 	fmt.Println("1.Une casquette")
@@ -177,13 +170,13 @@ func Porterequipement() Equipement{
 	fmt.Println("3.Aucun")
 
 	fmt.Scanln(&choix)
-	switch choix{
+	switch choix {
 	case 1:
-		equipement.Tête="Une casquette"
+		equipement.Tête = "Une casquette"
 	case 2:
-		equipement.Tête="Un bornet"
+		equipement.Tête = "Un bornet"
 	case 3:
-		equipement.Tête="Aucun"
+		equipement.Tête = "Aucun"
 	}
 
 	fmt.Println("choisir tes chaussures")
@@ -191,22 +184,21 @@ func Porterequipement() Equipement{
 	fmt.Println("2.Des sandales")
 	fmt.Println("3.Aucun")
 
-    fmt.Scanln(&choix)
+	fmt.Scanln(&choix)
 
-    switch choix{
+	switch choix {
 	case 1:
-		equipement.Pieds="Des basquettes"
+		equipement.Pieds = "Des basquettes"
 	case 2:
-		equipement.Pieds="Des sandales"
+		equipement.Pieds = "Des sandales"
 	case 3:
-		equipement.Pieds="Aucun"
+		equipement.Pieds = "Aucun"
 	}
 	return equipement
 }
 
-
-func FabriqueObjet(player *Character)  {
-	var choix int 
+func FabriqueObjet(player *Character) {
+	var choix int
 
 	fmt.Println("====Fabrique d'objet====")
 	fmt.Println()
@@ -218,17 +210,17 @@ func FabriqueObjet(player *Character)  {
 	fmt.Scanln(&choix)
 	switch choix {
 	case 1:
-		plume_de_corbeau:=false
-		cuir_de_sanglier:=false
-		for i, objet := range  player.Inventaire{
-			if objet == "plume_de_corbeau"{
+		plume_de_corbeau := false
+		cuir_de_sanglier := false
+		for i, objet := range player.Inventaire {
+			if objet == "plume_de_corbeau" {
 				plume_de_corbeau = true
-				player.Inventaire[i]=""
+				player.Inventaire[i] = ""
 				break
 			}
-			if objet == "cuir_de_sanglier"{
-				cuir_de_sanglier=true
-				player.Inventaire[i]=""
+			if objet == "cuir_de_sanglier" {
+				cuir_de_sanglier = true
+				player.Inventaire[i] = ""
 				break
 			}
 		}
@@ -237,40 +229,40 @@ func FabriqueObjet(player *Character)  {
 			return
 		}
 	case 2:
-		fourrure_de_loup:=false
-		peau_de_troll:=false
-	    for i, objet := range player.Inventaire{
-			if objet == "fourrure_de_loup"{
-				fourrure_de_loup=true
-				player.Inventaire[i]=""
+		fourrure_de_loup := false
+		peau_de_troll := false
+		for i, objet := range player.Inventaire {
+			if objet == "fourrure_de_loup" {
+				fourrure_de_loup = true
+				player.Inventaire[i] = ""
 				break
 			}
-			if objet == "peau_de_troll"{
-				peau_de_troll=true
-				player.Inventaire[i]=""
+			if objet == "peau_de_troll" {
+				peau_de_troll = true
+				player.Inventaire[i] = ""
 				break
 			}
 		}
-		if !fourrure_de_loup || !peau_de_troll{
+		if !fourrure_de_loup || !peau_de_troll {
 			fmt.Println("Tu n'as pas les ressources nécéssaire. Vous pouvez l'acheter chez le marchand")
 			return
 		}
 	case 3:
-		fourrure_de_loup:=false
-		cuir_de_sanglier:=false
-		for i, objet := range player.Inventaire{
+		fourrure_de_loup := false
+		cuir_de_sanglier := false
+		for i, objet := range player.Inventaire {
 			if objet == "fourrure_de_loup" {
-				fourrure_de_loup=true
-				player.Inventaire[i]=""
+				fourrure_de_loup = true
+				player.Inventaire[i] = ""
 				break
 			}
 			if objet == "cuir_de_sanglier" {
-				cuir_de_sanglier=true
-				player.Inventaire[i]=""
+				cuir_de_sanglier = true
+				player.Inventaire[i] = ""
 				break
 			}
 		}
-		if !cuir_de_sanglier || !fourrure_de_loup{
+		if !cuir_de_sanglier || !fourrure_de_loup {
 			fmt.Println("Tu n'as pas les ressources nécéssaires. Vous pouvez l'acheter chez le marchand")
 		}
 	case 4:
@@ -280,40 +272,39 @@ func FabriqueObjet(player *Character)  {
 	}
 }
 
-
-func UtiliserObjet(player *Character){
-	var choix int 
-    fmt.Println("===Utiliser un objet===")
-	for i, objet := range player.Inventaire{
+func UtiliserObjet(player *Character) {
+	var choix int
+	fmt.Println("===Utiliser un objet===")
+	for i, objet := range player.Inventaire {
 		fmt.Println(i+1, "-", objet)
 	}
 	fmt.Println("Quel objet veux-tu utiliser ?")
 	fmt.Scanln(&choix)
 
-	if choix<1 || choix > len(player.Inventaire){
-      fmt.Println("choix invalide")
-	  return
+	if choix < 1 || choix > len(player.Inventaire) {
+		fmt.Println("choix invalide")
+		return
 	}
-	index:=choix-1
+	index := choix - 1
 
-    objet:=player.Inventaire[index]
+	objet := player.Inventaire[index]
 
-	if objet == ""{
+	if objet == "" {
 		fmt.Println("Cette case est vide")
 		return
 	}
 	switch objet {
-	case"potion de vie":
-     player.pointDeVieActuel += 40
-	 fmt.Println("Tu récupères 40 points de vie ")
-	 fmt.Println("Ta vie est de :",player.pointDeVieActuel, "/", player.pointsDeVieMax)	
-	 player.Inventaire[index]=""
+	case "potion de vie":
+		player.pointDeVieActuel += 40
+		fmt.Println("Tu récupères 40 points de vie ")
+		fmt.Println("Ta vie est de :", player.pointDeVieActuel, "/", player.pointsDeVieMax)
+		player.Inventaire[index] = ""
+
 	}
 }
 
-func AjouterXp(player *Character, xpGagnes int){
+func AjouterXp(player *Character, xpGagnes int) {
 	player.xp += xpGagnes
 	fmt.Println("Tu gagnes", xpGagnes, "xp")
 	fmt.Println("xp:", player.xp)
 }
-

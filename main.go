@@ -1,12 +1,13 @@
 package main
 
 import (
-	"aventure/entrainement"
 	"aventure/Exploration"
+	"aventure/entrainement"
+	"aventure/inventaire"
 	"aventure/menuMarchand"
 	"aventure/menu_Principal"
 	"aventure/personnage"
-	"aventure/inventaire"
+
 	"fmt"
 )
 
@@ -39,7 +40,8 @@ func main() {
 			}
 			entrainement.Menuentrainement(&monPersonnage)
 		case 5:
-			fmt.Println("QUITTER")
+			menu_Principal.Information()
+		case 6:
 			return
 		default:
 			fmt.Println("chopix invalide")

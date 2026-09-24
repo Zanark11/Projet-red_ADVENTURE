@@ -1,8 +1,8 @@
 package menuMarchand
 
 import (
-	 "aventure/Marchand"
-	"aventure/personnage"
+	"aventure/Marchand"
+	"aventure/personnage" 
 	"fmt"
 )
 
