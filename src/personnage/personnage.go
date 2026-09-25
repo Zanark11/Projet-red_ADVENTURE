@@ -55,8 +55,8 @@ func DisplayInfo(character Character) {
 	fmt.Println()
 	fmt.Println("félicitation personnage crée !")
 	fmt.Println("nom :", character.nom)
-	fmt.Println("pointDeVieActuel:", character.pointDeVieActuel)
-	fmt.Println("classe:", character.classe)
+	fmt.Println("pointDeVieActuel:", character.PointDeVieActuel)
+	fmt.Println("classe:", character.Classe)
 	fmt.Println("niveau:", character.niveau)
 	fmt.Println("inventaire:", character.Inventaire)
 	fmt.Println("xp:", character.xp)
@@ -79,10 +79,10 @@ func InitCharacter(nom string, choixclasse string) Character {
 	equipement := Porterequipement()
 	character := Character{
 		nom:              nom,
-		pointDeVieActuel: pointDeVieActuel,
-		classe:           choixclasse,
+		PointDeVieActuel: pointDeVieActuel,
+		Classe:           choixclasse,
 		niveau:           1,
-		pointsDeVieMax:   400,
+		PointsDeVieMax:   400,
 		Inventaire:       []string{"potion de vie", "potion de vie", "potion de vie", "", "", ""},
 		xp:               0,
 		mana:             100,
@@ -94,10 +94,10 @@ func InitCharacter(nom string, choixclasse string) Character {
 
 type Character struct {
 	nom              string
-	classe           string
+	Classe           string
 	niveau           int
-	pointsDeVieMax   int
-	pointDeVieActuel int
+	PointsDeVieMax   int
+	PointDeVieActuel int
 	Inventaire       []string
 	xp               int
 	mana             int
@@ -127,15 +127,15 @@ func JeterObjet(character *Character) {
 }
 
 func Affichevie(perso *Character) {
-	fmt.Println("vie", perso.pointDeVieActuel, "/", perso.pointsDeVieMax)
+	fmt.Println("vie", perso.PointDeVieActuel, "/", perso.PointsDeVieMax)
 }
 
 func Playervivant(perso *Character) bool {
-	return perso.pointDeVieActuel > 0
+	return perso.PointDeVieActuel > 0
 }
 
 func Degats(perso *Character, degats int) {
-	perso.pointDeVieActuel -= degats
+	perso.PointDeVieActuel -= degats
 }
 
 type Equipement struct {
@@ -168,7 +168,7 @@ func Porterequipement() Equipement {
 
 	fmt.Println("choisir ton vêtement pour la tête")
 	fmt.Println("1.Une casquette")
-	fmt.Println("2.un bornet")
+	fmt.Println("2.un bonnet")
 	fmt.Println("3.Aucun")
 
 	fmt.Scanln(&choix)
@@ -296,9 +296,9 @@ func UtiliserObjet(player *Character, ennemi *adversaire.Adversaire) {
 	}
 	switch objet {
 	case "potion de vie":
-		player.pointDeVieActuel += 40
+		player.PointDeVieActuel += 40
 		fmt.Println("Tu récupères 40 points de vie ")
-		fmt.Println("Ta vie est de :", player.pointDeVieActuel, "/", player.pointsDeVieMax)
+		fmt.Println("Ta vie est de :", player.PointDeVieActuel, "/", player.PointsDeVieMax)
 		player.Inventaire[index] = ""
 	case "livre de sort":
 		if player.mana < 50 {
@@ -322,19 +322,19 @@ func UtiliserObjet(player *Character, ennemi *adversaire.Adversaire) {
 		Augmenterviemax(player, 20)
 		fmt.Println("Tu utilises le châpeau de l'aventurier !")
 		fmt.Println("Ta vie max augmente de +20")
-		fmt.Println("vie max:", player.pointsDeVieMax)
+		fmt.Println("vie max:", player.PointsDeVieMax)
 		player.Inventaire[index] = ""
 	case "Tunique de l'aventurier":
 		Augmenterviemax(player, 20)
 		fmt.Println("Tu utilises Tunique de l'aventurier !")
 		fmt.Println("Ta vie max augmente de +20")
-		fmt.Println("vie max:", player.pointsDeVieMax)
+		fmt.Println("vie max:", player.PointsDeVieMax)
 		player.Inventaire[index] = ""
 	case "Bottes de l'aventurier":
 		Augmenterviemax(player, 20)
 		fmt.Println("Tu utilises Bottes de l'aventurier !")
 		fmt.Println("Ta vie max augmente de +20")
-		fmt.Println("vie max:", player.pointsDeVieMax)
+		fmt.Println("vie max:", player.PointsDeVieMax)
 		player.Inventaire[index] = ""
 	case "poison":
 		poison(ennemi)
@@ -342,7 +342,7 @@ func UtiliserObjet(player *Character, ennemi *adversaire.Adversaire) {
 	}
 }
 func Augmenterviemax(player *Character, bonnus int) {
-	player.pointsDeVieMax += bonnus
+	player.PointsDeVieMax += bonnus
 }
 
 func AjouterXp(player *Character, xpGagnes int) {
