@@ -328,10 +328,10 @@ func JouerSerie1(joueur *personnage.Character) {
 			case "3":
 				joueur.PointDeVieActuel = 150
 			}
-
 			continue
 
-		} else if !adversaire.Adversairevivant(gobelin) {
+		}
+		if !adversaire.Adversairevivant(gobelin) {
 
 			fmt.Println("================================")
 			fmt.Println("VICTOIRE !")
@@ -342,7 +342,7 @@ func JouerSerie1(joueur *personnage.Character) {
 			fmt.Println("===Victoire===")
 			fmt.Println("vous avez vaincu le Grandmage. Félicitation !")
 			fmt.Println("vous remportez le combat")
+			break
 		}
 	}
-
 }
