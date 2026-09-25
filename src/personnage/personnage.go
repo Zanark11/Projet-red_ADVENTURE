@@ -176,7 +176,7 @@ func Porterequipement() Equipement {
 	case 1:
 		equipement.Tête = "Une casquette"
 	case 2:
-		equipement.Tête = "Un bornet"
+		equipement.Tête = "Un bonnet"
 	case 3:
 		equipement.Tête = "Aucun"
 	}
