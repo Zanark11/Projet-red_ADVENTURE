@@ -66,13 +66,13 @@ func Explorer(perso *personnage.Character) {
 						fmt.Println()
 						fmt.Println("vous entrez dans la pièce et tout est bien rangé. intrigué que cette pièce soit propre,")
 						fmt.Println("vous regardez autour de vous et voyez des photos de famille, et surtout une photo d'une jeune fille avec une inscription derrière")
-						fmt.Println("écrire avec du sang : Au secour!")
+						fmt.Println("écrite avec du sang : Au secour!")
 						fmt.Println("vous gardez la photo, plus déterminé que jamais à retrouver les villageois")
 						fmt.Println("vous continuez de fouiller et vous tomber sur des pièces.")
 						fmt.Println()
 						/*choix de prendre les pièce*/
-						fmt.Println("1.vous ramasser les 70 pièces")
-						fmt.Println("2.vous ne voulez pas rammasser les 70 pièces")
+						fmt.Println("1.Ramasser les 70 pièces")
+						fmt.Println("2.Laisser les 70 pièces")
 						fmt.Scanln(&choix)
 						switch choix {
 						case 1:
@@ -83,7 +83,7 @@ func Explorer(perso *personnage.Character) {
 						default:
 							fmt.Println("choix invalide")
 						}
-						/*boite d'encre*/
+						
                         fmt.Println()
 						fmt.Println("vous continuez votre fouille et vous tombez sur une boîte à encre couleur de  l'arc-en-ciel")
 						fmt.Println()
@@ -92,7 +92,7 @@ func Explorer(perso *personnage.Character) {
 						fmt.Scanln(&choix)
 						switch choix {
 						case 1:
-							// appel la fonction pour ramasser les objets
+							
 							ramasserunobjet.RamasserUnobjet(perso, "boîte d'encre")
 						case 2:
 							fmt.Println("vous refusez la boîte")
@@ -119,6 +119,18 @@ func Explorer(perso *personnage.Character) {
 				fmt.Println()
 				fmt.Println("vous remarquer quelque chose accroché au bord du puits")
 				fmt.Println("c'est une vieille corde")
+				fmt.Println()
+				fmt.Println("1.Ramaser la corde")
+				fmt.Println("2.Laisser la corde")
+				fmt.Println(&choix)
+				switch choix{
+				case 1:
+					ramasserunobjet.RamasserUnobjet(perso, "vieille corde")
+				case 2 :
+					fmt.Println("vous refusez la corde")
+				default:
+						fmt.Println("choix invalide")
+				}
 				
 			    fmt.Println("vous décidez de continuer...")
 			case 3:
@@ -134,7 +146,7 @@ func Explorer(perso *personnage.Character) {
 				fmt.Println("vous êtes à 2 mètre de l'ombre et vous vous rendez compte qu'il s'agit d'une personne")
 				fmt.Println("la personne est de dos , vous avancez à petits pas dans le but de l'immobiliser et savoir qui c'est.")
 				fmt.Println("Mais vous marchez sur une branche qui fait du bruit et là, la personne se retourne et vous voit.")
-				fmt.Println("Elle vous dit je suis <<le Grandmage>> et je t'attendais. si tu veux passer, montre moi que tu est un aventurier")
+				fmt.Println("Elle vous dit je suis <<le Grandmage>> et je t'attendais. si tu veux passer, montre moi que tu es un aventurier")
 				fmt.Println("dont la force se trouve dans la tête")
 				combat.JouerSerie1(perso)
 				fmt.Println()
@@ -146,10 +158,12 @@ func Explorer(perso *personnage.Character) {
 				fmt.Println("réfléchis...et tu trouveras ce que tu cherches.")
 				fmt.Println("vous vous approchez afin de savoir qui est ce ? Mais il disparaît.")
 				fmt.Println("vous continuer votre chemin et vous vous retrouvez face à une grande porte ne sachant comment l'ouvrir")
-				fmt.Println("et là vous vous rappelez de la clé du Grandmage.")
-				fmt.Println("vous l'utiliser pour ouvrir la grande porte")
+				fmt.Println()
+				fmt.Println("Quelque minute à réfléchir . Vous vous rappelez de la clé du Grandmage.")
+				fmt.Println("vous l'utilisez et la grande porte s'ouvre.")
 				fmt.Println("vous entrez et quelques mètre plus loin  vous voyez une pancarte avec l'enseigne << VILLAGE BRIH>>")
-				fmt.Println("félicitation car vous avez retrouver le village. Rendez vous au niveau 2 pour retrouver les villageois")
+				fmt.Println()
+				fmt.Println("Félicitation car vous avez retrouver le village. Rendez vous au niveau 2 pour retrouver les villageois")
 
 	    case 2:
 	        if !niveau2{
