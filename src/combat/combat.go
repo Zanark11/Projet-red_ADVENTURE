@@ -159,178 +159,190 @@ var Serie1 = []Question{
 }
 
 func JouerSerie1(joueur *personnage.Character) {
+	for {
+		gobelin := adversaire.CreerAdversaire()
 
-	gobelin := adversaire.CreerAdversaire()
+		resultat := PileOuFace()
 
-	resultat := PileOuFace()
+		debut := 0
 
-	debut := 0
+		tourJoueur := resultat == "pile"
 
-	tourJoueur := resultat == "pile"
+		fmt.Println("Pile ou face...")
 
-	fmt.Println("Pile ou face...")
-
-	if resultat == "pile" {
-		fmt.Println("Résultat : pile")
-		fmt.Println("Le joueur commence !")
-	} else {
-		fmt.Println("Résultat : face")
-		fmt.Println("Le Grandmage commence !")
-	}
-
-	fmt.Println()
-
-	fmt.Println("========== COMBAT - TOUR PAR TOUR ==========")
-	fmt.Println()
-
-	for personnage.Playervivant(joueur) && adversaire.Adversairevivant(gobelin) {
-
-		if tourJoueur {
-			var action int
-			fmt.Println("Choisissez une question :")
-			fmt.Println()
-			fmt.Println("1.Choisir une question")
-			fmt.Println("2.Utiliser un objet")
-			fmt.Println("Quelle action choissisez vous ?")
-			fmt.Scanln(&action)
-
-			if action == 2 {
-				personnage.UtiliserObjet(joueur, &gobelin)
-				tourJoueur = false
-				continue
-			}
-			if action != 1 {
-				fmt.Println("choix invalide")
-				continue
-			}
-			fmt.Println()
-			fmt.Println("choissisez une question :")
-			fmt.Println()
-
-			for j := 0; j < 3 && debut+j <len(Serie1); j++ {
-				fmt.Println(j+1, "-", Serie1[debut+j].Texte)
-			}
-
-			fmt.Print("\nVotre choix : ")
-
-			var choix int
-			fmt.Scanln(&choix)
-
-			if choix < 1 || choix > 3 {
-				fmt.Println("Choix invalide.")
-				continue
-			}
-
-			question := Serie1[debut+choix-1]
-
-			fmt.Println()
-			fmt.Println("Question :", question.Texte)
-			fmt.Println()
-
-			for j := 0; j < len(question.Reponses); j++ {
-				fmt.Println(j+1, "-", question.Reponses[j])
-			}
-
-			reponse := ChoisirReponseGrandSage()
-
-			fmt.Println("Le Grandmage choisit la réponse :", reponse)
-
-			fmt.Println()
-
-			if reponse == question.BonneReponse {
-				fmt.Println("Bonne réponse !")
-				fmt.Println("Le joueur perd 40 PV.")
-
-				personnage.Degats(joueur, 40)
-			} else {
-				fmt.Println("Mauvaise réponse !")
-				fmt.Println("Le Grandmage perd 40 PV.")
-
-				adversaire.Degats(&gobelin, 40)
-			}
-
-			personnage.Affichevie(joueur)
-			adversaire.Affichevie(gobelin)
-
-			fmt.Println()
-
-			debut += 3
-
-			if debut >= len(Serie1) {
-				debut = 0
-			}
-
-			tourJoueur = false
-
+		if resultat == "pile" {
+			fmt.Println("Résultat : pile")
+			fmt.Println("Le joueur commence !")
 		} else {
-
-			fmt.Println("========== TOUR DU GRANDMAGE ==========")
-			fmt.Println()
-
-			indiceQuestion := rand.Intn(3)
-			if debut+indiceQuestion>=len(Serie1){
-				indiceQuestion=0
-			}
-			question := Serie1[debut+indiceQuestion]
-
-			fmt.Println("Le Grandmage choisit une question :")
-			fmt.Println()
-			fmt.Println("Question :", question.Texte)
-			fmt.Println()
-
-			for j := 0; j < len(question.Reponses); j++ {
-				fmt.Println(j+1, "-", question.Reponses[j])
-			}
-
-			fmt.Println()
-			fmt.Print("Votre réponse : ")
-
-			var reponseJoueur int
-			fmt.Scanln(&reponseJoueur)
-
-			if reponseJoueur == question.BonneReponse {
-				fmt.Println("Bonne réponse !")
-				fmt.Println("Le Grandmage perd 40 PV.")
-
-				adversaire.Degats(&gobelin, 40)
-			} else {
-				fmt.Println("Mauvaise réponse !")
-				fmt.Println("Le joueur perd 40 PV.")
-
-				personnage.Degats(joueur, 40)
-			}
-
-			fmt.Println()
-			personnage.Affichevie(joueur)
-			adversaire.Affichevie(gobelin)
-			fmt.Println()
-
-			debut += 3
-
-			if debut >= len(Serie1) {
-				debut = 0
-			}
-
-			tourJoueur = true
+			fmt.Println("Résultat : face")
+			fmt.Println("Le Grandmage commence !")
 		}
-	}
-	if !personnage.Playervivant(joueur) {
-
-		fmt.Println("================================")
-		fmt.Println("DÉFAITE !")
-		fmt.Println("Le Grandmage a gagné le combat.")
-		fmt.Println("================================")
-
-	} else if !adversaire.Adversairevivant(gobelin) {
-
-		fmt.Println("================================")
-		fmt.Println("VICTOIRE !")
-		fmt.Println("Vous avez vaincu le Grandmage !")
-		fmt.Println("================================")
 
 		fmt.Println()
-		fmt.Println("===Victoire===")
-		fmt.Println("vous avez vaincu le Grandmage. Félicitation !")
-		fmt.Println("vous remportez le combat")
+
+		fmt.Println("========== COMBAT - TOUR PAR TOUR ==========")
+		fmt.Println()
+
+		for personnage.Playervivant(joueur) && adversaire.Adversairevivant(gobelin) {
+
+			if tourJoueur {
+				var action int
+				fmt.Println("Choisissez une question :")
+				fmt.Println()
+				fmt.Println("1.Choisir une question")
+				fmt.Println("2.Utiliser un objet")
+				fmt.Println("Quelle action choissisez vous ?")
+				fmt.Scanln(&action)
+
+				if action == 2 {
+					personnage.UtiliserObjet(joueur, &gobelin)
+					tourJoueur = false
+					continue
+				}
+				if action != 1 {
+					fmt.Println("choix invalide")
+					continue
+				}
+				fmt.Println()
+				fmt.Println("choissisez une question :")
+				fmt.Println()
+
+				for j := 0; j < 3 && debut+j < len(Serie1); j++ {
+					fmt.Println(j+1, "-", Serie1[debut+j].Texte)
+				}
+
+				fmt.Print("\nVotre choix : ")
+
+				var choix int
+				fmt.Scanln(&choix)
+
+				if choix < 1 || choix > 3 {
+					fmt.Println("Choix invalide.")
+					continue
+				}
+
+				question := Serie1[debut+choix-1]
+
+				fmt.Println()
+				fmt.Println("Question :", question.Texte)
+				fmt.Println()
+
+				for j := 0; j < len(question.Reponses); j++ {
+					fmt.Println(j+1, "-", question.Reponses[j])
+				}
+
+				reponse := ChoisirReponseGrandSage()
+
+				fmt.Println("Le Grandmage choisit la réponse :", reponse)
+
+				fmt.Println()
+
+				if reponse == question.BonneReponse {
+					fmt.Println("Bonne réponse !")
+					fmt.Println("Le joueur perd 40 PV.")
+
+					personnage.Degats(joueur, 40)
+				} else {
+					fmt.Println("Mauvaise réponse !")
+					fmt.Println("Le Grandmage perd 40 PV.")
+
+					adversaire.Degats(&gobelin, 40)
+				}
+
+				personnage.Affichevie(joueur)
+				adversaire.Affichevie(gobelin)
+
+				fmt.Println()
+
+				debut += 3
+
+				if debut >= len(Serie1) {
+					debut = 0
+				}
+
+				tourJoueur = false
+
+			} else {
+
+				fmt.Println("========== TOUR DU GRANDMAGE ==========")
+				fmt.Println()
+
+				indiceQuestion := rand.Intn(3)
+				if debut+indiceQuestion >= len(Serie1) {
+					indiceQuestion = 0
+				}
+				question := Serie1[debut+indiceQuestion]
+
+				fmt.Println("Le Grandmage choisit une question :")
+				fmt.Println()
+				fmt.Println("Question :", question.Texte)
+				fmt.Println()
+
+				for j := 0; j < len(question.Reponses); j++ {
+					fmt.Println(j+1, "-", question.Reponses[j])
+				}
+
+				fmt.Println()
+				fmt.Print("Votre réponse : ")
+
+				var reponseJoueur int
+				fmt.Scanln(&reponseJoueur)
+
+				if reponseJoueur == question.BonneReponse {
+					fmt.Println("Bonne réponse !")
+					fmt.Println("Le Grandmage perd 40 PV.")
+
+					adversaire.Degats(&gobelin, 40)
+				} else {
+					fmt.Println("Mauvaise réponse !")
+					fmt.Println("Le joueur perd 40 PV.")
+
+					personnage.Degats(joueur, 40)
+				}
+
+				fmt.Println()
+				personnage.Affichevie(joueur)
+				adversaire.Affichevie(gobelin)
+				fmt.Println()
+
+				debut += 3
+
+				if debut >= len(Serie1) {
+					debut = 0
+				}
+
+				tourJoueur = true
+			}
+		}
+		if !personnage.Playervivant(joueur) {
+
+			fmt.Println("================================")
+			fmt.Println("DÉFAITE !")
+			fmt.Println("Le Grandmage a gagné le combat.")
+			fmt.Println("================================")
+			switch joueur.Classe {
+			case "1":
+				joueur.PointDeVieActuel = 100
+			case "2":
+				joueur.PointDeVieActuel = 120
+			case "3":
+				joueur.PointDeVieActuel = 150
+			}
+
+			continue
+
+		} else if !adversaire.Adversairevivant(gobelin) {
+
+			fmt.Println("================================")
+			fmt.Println("VICTOIRE !")
+			fmt.Println("Vous avez vaincu le Grandmage !")
+			fmt.Println("================================")
+
+			fmt.Println()
+			fmt.Println("===Victoire===")
+			fmt.Println("vous avez vaincu le Grandmage. Félicitation !")
+			fmt.Println("vous remportez le combat")
+		}
 	}
+
 }
