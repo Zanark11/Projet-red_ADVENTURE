@@ -1,14 +1,14 @@
 package menuexploration
 
 import (
-	"aventure/personnage"
-	"aventure/RamasserunObjet"
+	ramasserunobjet "aventure/RamasserunObjet"
 	"aventure/combat"
+	"aventure/personnage"
 	"fmt"
 )
 
 func Explorer(perso *personnage.Character) {
-	
+
 	niveau2 := false
 
 	for {
@@ -43,20 +43,20 @@ func Explorer(perso *personnage.Character) {
 			switch choix {
 			case 1:
 				porteOuverte := false
-				/*énigme de la porte */
+
 				for !porteOuverte {
 					var choix int
 					fmt.Println("Vous arrivez devant la maison.")
 					fmt.Println("vous entrez dans la maison et vous constatez qu'elle est dans un état insalubre et décidez")
 					fmt.Println("quand même de fouiller. Durant votre fouille vous constatez que l'une des portes est fermée.")
-					fmt.Println("avec une inscription, << pour ouvrir la porte resolvez cette équation 2x + 2 = 0 >>")
+					fmt.Println("avec une inscription, << pour ouvrir la porte résolvez cette équation 2x + 2 = 0 >>")
 					fmt.Println()
 					fmt.Println("1.la réponse est 0")
 					fmt.Println("2.la réponse est -1")
 					fmt.Println("3.la réponse est 1")
 					fmt.Println("4.Abandonée")
 					fmt.Scanln(&choix)
-					/*choix de la reponse*/
+
 					switch choix {
 					case 1:
 						fmt.Println("Mauvaise réponse !")
@@ -83,39 +83,39 @@ func Explorer(perso *personnage.Character) {
 						default:
 							fmt.Println("choix invalide")
 						}
-						
-                        fmt.Println()
+
+						fmt.Println()
 						fmt.Println("vous continuez votre fouille et vous tombez sur une boîte à encre couleur de  l'arc-en-ciel")
 						fmt.Println()
 						fmt.Println("1.prenez_vous cette boîte ?")
-						fmt.Println("2.Refuser_vous cette boîte ?")
+						fmt.Println("2.Refusez_vous cette boîte ?")
 						fmt.Scanln(&choix)
 						switch choix {
 						case 1:
-							
+
 							ramasserunobjet.RamasserUnobjet(perso, "boîte d'encre")
 						case 2:
 							fmt.Println("vous refusez la boîte")
 						default:
 							fmt.Println("choix invalide")
 						}
-			        case 3:
+					case 3:
 						fmt.Println("Mauvaise réponse !")
 					case 4:
 						return
 					default:
 						fmt.Println("choix invalide")
-					   }
+					}
 					if porteOuverte {
 						fmt.Println(" vous sortez de la maison.")
 					} else {
 						fmt.Println("la porte reste fermée.")
 					}
-				    }
+				}
 			case 2:
-                fmt.Println("vous vous approchez du puits et il vous semble très ancien.")
-			    fmt.Println("vous regardez à l'intérieur....")
-			    fmt.Println("il fait complètement noir.")
+				fmt.Println("vous vous approchez du puits et il vous semble très ancien.")
+				fmt.Println("vous regardez à l'intérieur....")
+				fmt.Println("il fait complètement noir.")
 				fmt.Println()
 				fmt.Println("vous remarquer quelque chose accroché au bord du puits")
 				fmt.Println("c'est une vieille corde")
@@ -123,50 +123,50 @@ func Explorer(perso *personnage.Character) {
 				fmt.Println("1.Ramaser la corde")
 				fmt.Println("2.Laisser la corde")
 				fmt.Println(&choix)
-				switch choix{
+				switch choix {
 				case 1:
 					ramasserunobjet.RamasserUnobjet(perso, "vieille corde")
-				case 2 :
+				case 2:
 					fmt.Println("vous refusez la corde")
 				default:
-						fmt.Println("choix invalide")
+					fmt.Println("choix invalide")
 				}
-				
-			    fmt.Println("vous décidez de continuer...")
+
+				fmt.Println("vous décidez de continuer...")
 			case 3:
 				fmt.Println()
 				fmt.Println("Vous continuez sur le chemin.")
 			case 4:
-				return 
+				return
 			default:
 				fmt.Println("choix invalide")
-				}
-				fmt.Println("Après cela vous avancez  et vous remarquez une ombre . ")
-				fmt.Println("vous décidez de continuer malgré cela et au fur et à mesure l'ombre devient claire")
-				fmt.Println("vous êtes à 2 mètre de l'ombre et vous vous rendez compte qu'il s'agit d'une personne")
-				fmt.Println("la personne est de dos , vous avancez à petits pas dans le but de l'immobiliser et savoir qui c'est.")
-				fmt.Println("Mais vous marchez sur une branche qui fait du bruit et là, la personne se retourne et vous voit.")
-				fmt.Println("Elle vous dit je suis <<le Grandmage>> et je t'attendais. si tu veux passer, montre moi que tu es un aventurier")
-				fmt.Println("dont la force se trouve dans la tête")
-				combat.JouerSerie1(perso)
-				fmt.Println()
-				fmt.Println("vous avez battu le Grandmage .")
-				fmt.Println("vous constatez une clé à coté du Grandmage. vous prenez la clé.")
-				fmt.Println("vous continuez et sur votre chemin vous croisez une personne qui vous dit:")
-				fmt.Println("<<N'oublie pas la route est longue, aventurier...")
-				fmt.Println("mais souviens-toi: qui va doucement va sûrement. surtout ne te précipite pas. Observe,")
-				fmt.Println("réfléchis...et tu trouveras ce que tu cherches.")
-				fmt.Println("vous vous approchez afin de savoir qui est ce ? Mais il disparaît.")
-				fmt.Println("vous continuer votre chemin et vous vous retrouvez face à une grande porte ne sachant comment l'ouvrir")
-				fmt.Println()
-				fmt.Println("Quelque minute à réfléchir . Vous vous rappelez de la clé du Grandmage.")
-				fmt.Println("vous l'utilisez et la grande porte s'ouvre.")
-				fmt.Println("vous entrez et quelques mètre plus loin  vous voyez une pancarte avec l'enseigne << VILLAGE BRIH>>")
-				fmt.Println()
-				fmt.Println("Félicitation car vous avez retrouver le village. Rendez vous au niveau 2 pour retrouver les villageois")
+			}
+			fmt.Println("Après cela vous avancez  et vous remarquez une ombre . ")
+			fmt.Println("Vous décidez de continuer malgré cela et au fur et à mesure l'ombre devient claire.")
+			fmt.Println("Vous êtes à 2 mètre de l'ombre et vous vous rendez compte qu'il s'agit d'une personne.")
+			fmt.Println("La personne est de dos , vous avancez à petits pas dans le but de l'immobiliser et savoir qui c'est.")
+			fmt.Println("Mais vous marchez sur une branche qui fait du bruit et là, la personne se retourne et vous voit.")
+			fmt.Println("Elle vous dit je suis <<le Grandmage>> et je t'attendais. si tu veux passer, montre moi que tu es un aventurier")
+			fmt.Println("dont la force se trouve dans la tête")
+			combat.JouerSerie1(perso)
+			fmt.Println()
+			fmt.Println("vous avez battu le Grandmage .")
+			fmt.Println("vous constatez une clé à coté du Grandmage. vous prenez la clé.")
+			fmt.Println("vous continuez et sur votre chemin vous croisez une personne qui vous dit:")
+			fmt.Println("<<N'oublie pas la route est longue, aventurier...")
+			fmt.Println("mais souviens-toi: qui va doucement va sûrement. surtout ne te précipite pas. Observe,")
+			fmt.Println("réfléchis...et tu trouveras ce que tu cherches.")
+			fmt.Println("vous vous approchez afin de savoir qui est ce ? Mais il disparaît.")
+			fmt.Println("vous continuer votre chemin et vous vous retrouvez face à une grande porte ne sachant comment l'ouvrir")
+			fmt.Println()
+			fmt.Println("Quelque minute à réfléchir . Vous vous rappelez de la clé du Grandmage.")
+			fmt.Println("vous l'utilisez et la grande porte s'ouvre.")
+			fmt.Println("vous entrez et quelques mètre plus loin  vous voyez une pancarte avec l'enseigne << VILLAGE BRIH>>")
+			fmt.Println()
+			fmt.Println("Félicitation car vous avez retrouver le village. Rendez vous au niveau 2 pour retrouver les villageois")
 
-	    case 2:
-	        if !niveau2{
+		case 2:
+			if !niveau2 {
 				fmt.Println("le niveau 2 sortira le 30/09/2026")
 				fmt.Println("Avec plus de fonctionnalité")
 				continue
@@ -175,6 +175,6 @@ func Explorer(perso *personnage.Character) {
 			return
 		default:
 			fmt.Println("choix invalide")
-	    }
-    }
+		}
+	}
 }

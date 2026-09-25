@@ -62,14 +62,17 @@ func Buy(player *personnage.Character, item Item) bool {
 	if !HasInventorySpace(player) {
 		return false
 	}
+	if AddItem(player, item){
 	player.Argent -= item.prix
-	return AddItem(player, item)
+	return true
+    }
+	return false
 }
 
 var maBoutique = Shop{
 	Items: []Item{
 		{nom: "potion de vie", prix: 0,},
-		{nom: "livre de connaissance", prix: 50},
+		{nom: "livre de sort", prix: 50},
 		{nom: "poison ", prix: 40},
 		{nom: "potion de mana", prix: 40},
 		{nom: "cuir du sanglier", prix: 80},

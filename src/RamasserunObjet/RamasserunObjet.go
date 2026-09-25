@@ -1,7 +1,7 @@
 package ramasserunobjet
 
 import (
-	marchand "aventure/Marchand"
+	 "aventure/marchand"
 	"aventure/personnage"
 	"fmt"
 )

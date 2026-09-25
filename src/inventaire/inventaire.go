@@ -38,7 +38,7 @@ func AccessInventory(player *personnage.Character) bool {
 			case 3:
 				personnage.FabriqueObjet(player)
 			case 2:
-                personnage.UtiliserObjet(player)
+                personnage.UtiliserObjet(player, nil)
 		    case 4:
 			    return false
 		    default:

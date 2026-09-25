@@ -1,7 +1,9 @@
 package personnage
 
 import (
+	"aventure/adversaire"
 	"fmt"
+	"time"
 )
 
 func CreationPersonnage() Character {
@@ -67,11 +69,11 @@ func InitCharacter(nom string, choixclasse string) Character {
 
 	switch choixclasse {
 	case "1":
-		pointDeVieActuel = 120
+		pointDeVieActuel = 200
 	case "2":
-		pointDeVieActuel = 110
+		pointDeVieActuel = 180
 	case "3":
-		pointDeVieActuel = 100
+		pointDeVieActuel = 300
 	}
 
 	equipement := Porterequipement()
@@ -80,11 +82,11 @@ func InitCharacter(nom string, choixclasse string) Character {
 		pointDeVieActuel: pointDeVieActuel,
 		classe:           choixclasse,
 		niveau:           1,
-		pointsDeVieMax:   500,
+		pointsDeVieMax:   400,
 		Inventaire:       []string{"potion de vie", "potion de vie", "potion de vie", "", "", ""},
 		xp:               0,
 		mana:             100,
-		Argent:           100,
+		Argent:           500,
 		equipement:       equipement,
 	}
 	return character
@@ -212,16 +214,14 @@ func FabriqueObjet(player *Character) {
 	case 1:
 		plume_de_corbeau := false
 		cuir_de_sanglier := false
-		for i, objet := range player.Inventaire {
-			if objet == "plume_de_corbeau" {
+		for _, objet := range player.Inventaire {
+			if objet == "plume de corbeau" {
 				plume_de_corbeau = true
-				player.Inventaire[i] = ""
-				break
+
 			}
-			if objet == "cuir_de_sanglier" {
+			if objet == "cuir du sanglier" {
 				cuir_de_sanglier = true
-				player.Inventaire[i] = ""
-				break
+
 			}
 		}
 		if !plume_de_corbeau || !cuir_de_sanglier {
@@ -232,15 +232,16 @@ func FabriqueObjet(player *Character) {
 		fourrure_de_loup := false
 		peau_de_troll := false
 		for i, objet := range player.Inventaire {
-			if objet == "fourrure_de_loup" {
+			if objet == "fourrure de loup" {
 				fourrure_de_loup = true
 				player.Inventaire[i] = ""
 				break
 			}
-			if objet == "peau_de_troll" {
+			if objet == "peau de troll" {
 				peau_de_troll = true
 				player.Inventaire[i] = ""
 				break
+
 			}
 		}
 		if !fourrure_de_loup || !peau_de_troll {
@@ -251,12 +252,12 @@ func FabriqueObjet(player *Character) {
 		fourrure_de_loup := false
 		cuir_de_sanglier := false
 		for i, objet := range player.Inventaire {
-			if objet == "fourrure_de_loup" {
+			if objet == "fourrure de loup" {
 				fourrure_de_loup = true
 				player.Inventaire[i] = ""
 				break
 			}
-			if objet == "cuir_de_sanglier" {
+			if objet == "cuir du sanglier" {
 				cuir_de_sanglier = true
 				player.Inventaire[i] = ""
 				break
@@ -272,7 +273,7 @@ func FabriqueObjet(player *Character) {
 	}
 }
 
-func UtiliserObjet(player *Character) {
+func UtiliserObjet(player *Character, ennemi *adversaire.Adversaire) {
 	var choix int
 	fmt.Println("===Utiliser un objet===")
 	for i, objet := range player.Inventaire {
@@ -299,12 +300,61 @@ func UtiliserObjet(player *Character) {
 		fmt.Println("Tu récupères 40 points de vie ")
 		fmt.Println("Ta vie est de :", player.pointDeVieActuel, "/", player.pointsDeVieMax)
 		player.Inventaire[index] = ""
+	case "livre de sort":
+		if player.mana < 50 {
+			fmt.Println("tu ne peux utiliser le livre de sort car pas assez de mana. Tu peux l'acheter chez")
+			fmt.Println("le marchand")
+			return
+		}
+		player.mana -= 50
+		fmt.Println("mana restant :", player.mana)
 
+		adversaire.Degats(ennemi, 20)
+		fmt.Println("le livre de sort inflige 20 dégats sur la vie du Grandmage!")
+		adversaire.Affichevie(*ennemi)
+		player.Inventaire[index] = ""
+	case "potion de mana":
+		player.mana += 50
+		fmt.Println("potion de mana utilisée")
+		fmt.Println("mana actuel:", player.mana)
+		player.Inventaire[index] = ""
+	case "châpeau de l'aventurier":
+		Augmenterviemax(player, 20)
+		fmt.Println("Tu utilises le châpeau de l'aventurier !")
+		fmt.Println("Ta vie max augmente de +20")
+		fmt.Println("vie max:", player.pointsDeVieMax)
+		player.Inventaire[index] = ""
+	case "Tunique de l'aventurier":
+		Augmenterviemax(player, 20)
+		fmt.Println("Tu utilises Tunique de l'aventurier !")
+		fmt.Println("Ta vie max augmente de +20")
+		fmt.Println("vie max:", player.pointsDeVieMax)
+		player.Inventaire[index] = ""
+	case "Bottes de l'aventurier":
+		Augmenterviemax(player, 20)
+		fmt.Println("Tu utilises Bottes de l'aventurier !")
+		fmt.Println("Ta vie max augmente de +20")
+		fmt.Println("vie max:", player.pointsDeVieMax)
+		player.Inventaire[index] = ""
+	case "poison":
+		poison(ennemi)
+		player.Inventaire[index] = ""
 	}
+}
+func Augmenterviemax(player *Character, bonnus int) {
+	player.pointsDeVieMax += bonnus
 }
 
 func AjouterXp(player *Character, xpGagnes int) {
 	player.xp += xpGagnes
 	fmt.Println("Tu gagnes", xpGagnes, "xp")
 	fmt.Println("xp:", player.xp)
+}
+func poison(ennemi *adversaire.Adversaire) {
+	for i := 0; i < 3; i++ {
+		time.Sleep(time.Second)
+		adversaire.Degats(ennemi, 3)
+		fmt.Println("le poison inflige des dégats pendant 3s")
+		adversaire.Affichevie(*ennemi)
+	}
 }
