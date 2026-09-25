@@ -122,7 +122,7 @@ func Explorer(perso *personnage.Character) {
 				fmt.Println()
 				fmt.Println("1.Ramaser la corde")
 				fmt.Println("2.Laisser la corde")
-				fmt.Println(&choix)
+				fmt.Scanln(&choix)
 				switch choix {
 				case 1:
 					ramasserunobjet.RamasserUnobjet(perso, "vieille corde")
