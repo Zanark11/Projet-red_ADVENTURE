@@ -126,6 +126,7 @@ func Explorer(perso *personnage.Character) {
 				switch choix {
 				case 1:
 					ramasserunobjet.RamasserUnobjet(perso, "vieille corde")
+
 				case 2:
 					fmt.Println("vous refusez la corde")
 				default:
